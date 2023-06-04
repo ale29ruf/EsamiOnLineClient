@@ -7,7 +7,7 @@ import proto.SenderGrpc;
 
 import java.util.List;
 
-public class Communicator { //Il Communicator incapsula lo stub e ne offre le funzionalita'
+public final class Communicator { //Il Communicator incapsula lo stub e ne offre le funzionalita'
 
     ManagedChannel channel;
     SenderGrpc.SenderBlockingStub stub;
