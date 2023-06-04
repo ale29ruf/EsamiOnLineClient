@@ -1,0 +1,72 @@
+syntax = "proto3"; /* default is proto2 */
+
+/* *
+ * If no explicit java_package option is given in the .proto file, then by default the proto package
+ * (specified using the “package” keyword) will be used
+ * */
+option java_package = "proto";
+
+/* The greeting service definition. */
+service Sender {
+
+  rpc CaricaAppelli (Info) returns (ListaAppelli) {}
+
+  rpc RegistraStudente (Studente) returns (CodiceAppello) {}
+
+  rpc CaricaDomandeAppello (Info) returns (ListaDomande) {}
+
+  rpc InviaRisposte (RispostaAppello) returns (Modulo) {}
+
+}
+
+message Info {
+  /* *
+   * Messages have field that start from 1 (zero is not allowed. Example of others types are:
+   * int32, boolean, enum etc.
+   * */
+  int32 comment = 1;
+}
+
+message ListaAppelli {
+  repeated Appello appelli = 1;
+}
+
+message Appello {
+  int32 id = 1;
+  string data = 2;
+  string ora = 3;
+  string durata = 4;
+}
+
+message Studente {
+  string matricola = 1;
+  string codFiscale = 2;
+  int32 idAppello = 3;
+}
+
+message CodiceAppello {
+  string codice = 1;
+}
+
+message ListaDomande {
+  repeated Domanda domande = 1;
+}
+
+message Domanda {
+  string testo = 1;
+}
+
+message RispostaAppello {
+  string idAppello = 1;
+  repeated Risposta risposte = 3;
+}
+
+message Risposta {
+  int32 risposta = 1;
+}
+
+message Modulo {
+  string idAppello = 1;
+  repeated Risposta risposte = 2;
+  int32 punteggio = 3;
+}
