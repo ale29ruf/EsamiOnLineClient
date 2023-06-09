@@ -13,7 +13,9 @@ service Sender {
 
   rpc RegistraStudente (Studente) returns (CodiceAppello) {}
 
-  rpc CaricaDomandeAppello (Info) returns (ListaDomande) {}
+  rpc PartecipaEsame (pRequest) returns (Info) {}
+
+  rpc inviaDomande (ListaDomande) returns (Info) {}
 
   rpc InviaRisposte (RispostaAppello) returns (Modulo) {}
 
@@ -24,7 +26,7 @@ message Info {
    * Messages have field that start from 1 (zero is not allowed. Example of others types are:
    * int32, boolean, enum etc.
    * */
-  int32 comment = 1;
+  string testo = 1;
 }
 
 message ListaAppelli {
@@ -33,9 +35,8 @@ message ListaAppelli {
 
 message Appello {
   int32 id = 1;
-  string data = 2;
-  string ora = 3;
-  string durata = 4;
+  string ora = 2;
+  string durata = 3;
 }
 
 message Studente {
@@ -57,16 +58,26 @@ message Domanda {
 }
 
 message RispostaAppello {
-  string idAppello = 1;
-  repeated Risposta risposte = 3;
+  int32 idAppello = 1;
+  ListaRisposte listaRisposte = 2;
 }
 
 message Risposta {
   int32 risposta = 1;
 }
 
+message pRequest {
+  CodiceAppello codApello = 1;
+  string hostaname = 2;
+  int32 port = 3;
+}
+
 message Modulo {
-  string idAppello = 1;
-  repeated Risposta risposte = 2;
+  int32 idAppello = 1;
+  ListaRisposte listaRisposte = 2;
   int32 punteggio = 3;
+}
+
+message ListaRisposte {
+  repeated Risposta risposte = 1;
 }

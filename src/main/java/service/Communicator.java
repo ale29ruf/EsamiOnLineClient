@@ -17,12 +17,12 @@ public final class Communicator { //Il Communicator incapsula lo stub e ne offre
         this.stub = stub;
     }
 
-    /*
+
     public void instauraConnessione(int port){
         channel = ManagedChannelBuilder.forAddress("localhost", port).usePlaintext().build();
         stub = SenderGrpc.newBlockingStub(channel);
     }
-     */
+
 
     public List<Remotemethod.Appello> caricaAppelli() {
         Remotemethod.ListaAppelli appelli = stub.caricaAppelli(Remotemethod.Info.newBuilder().setComment(0).build());
@@ -43,5 +43,6 @@ public final class Communicator { //Il Communicator incapsula lo stub e ne offre
     public Remotemethod.Modulo inviaRisposte(Remotemethod.RispostaAppello risposte){
         return stub.inviaRisposte(risposte);
     }
+
 
 }

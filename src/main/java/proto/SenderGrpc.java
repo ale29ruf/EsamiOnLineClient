@@ -94,36 +94,68 @@ public final class SenderGrpc {
      return getRegistraStudenteMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<proto.Remotemethod.Info,
-      proto.Remotemethod.ListaDomande> getCaricaDomandeAppelloMethod;
+  private static volatile io.grpc.MethodDescriptor<proto.Remotemethod.pRequest,
+      proto.Remotemethod.Info> getPartecipaEsameMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "CaricaDomandeAppello",
-      requestType = proto.Remotemethod.Info.class,
-      responseType = proto.Remotemethod.ListaDomande.class,
+      fullMethodName = SERVICE_NAME + '/' + "PartecipaEsame",
+      requestType = proto.Remotemethod.pRequest.class,
+      responseType = proto.Remotemethod.Info.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<proto.Remotemethod.Info,
-      proto.Remotemethod.ListaDomande> getCaricaDomandeAppelloMethod() {
-    io.grpc.MethodDescriptor<proto.Remotemethod.Info, proto.Remotemethod.ListaDomande> getCaricaDomandeAppelloMethod;
-    if ((getCaricaDomandeAppelloMethod = SenderGrpc.getCaricaDomandeAppelloMethod) == null) {
+  public static io.grpc.MethodDescriptor<proto.Remotemethod.pRequest,
+      proto.Remotemethod.Info> getPartecipaEsameMethod() {
+    io.grpc.MethodDescriptor<proto.Remotemethod.pRequest, proto.Remotemethod.Info> getPartecipaEsameMethod;
+    if ((getPartecipaEsameMethod = SenderGrpc.getPartecipaEsameMethod) == null) {
       synchronized (SenderGrpc.class) {
-        if ((getCaricaDomandeAppelloMethod = SenderGrpc.getCaricaDomandeAppelloMethod) == null) {
-          SenderGrpc.getCaricaDomandeAppelloMethod = getCaricaDomandeAppelloMethod = 
-              io.grpc.MethodDescriptor.<proto.Remotemethod.Info, proto.Remotemethod.ListaDomande>newBuilder()
+        if ((getPartecipaEsameMethod = SenderGrpc.getPartecipaEsameMethod) == null) {
+          SenderGrpc.getPartecipaEsameMethod = getPartecipaEsameMethod = 
+              io.grpc.MethodDescriptor.<proto.Remotemethod.pRequest, proto.Remotemethod.Info>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "Sender", "CaricaDomandeAppello"))
+                  "Sender", "PartecipaEsame"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  proto.Remotemethod.Info.getDefaultInstance()))
+                  proto.Remotemethod.pRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  proto.Remotemethod.ListaDomande.getDefaultInstance()))
-                  .setSchemaDescriptor(new SenderMethodDescriptorSupplier("CaricaDomandeAppello"))
+                  proto.Remotemethod.Info.getDefaultInstance()))
+                  .setSchemaDescriptor(new SenderMethodDescriptorSupplier("PartecipaEsame"))
                   .build();
           }
         }
      }
-     return getCaricaDomandeAppelloMethod;
+     return getPartecipaEsameMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<proto.Remotemethod.ListaDomande,
+      proto.Remotemethod.Info> getInviaDomandeMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "inviaDomande",
+      requestType = proto.Remotemethod.ListaDomande.class,
+      responseType = proto.Remotemethod.Info.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<proto.Remotemethod.ListaDomande,
+      proto.Remotemethod.Info> getInviaDomandeMethod() {
+    io.grpc.MethodDescriptor<proto.Remotemethod.ListaDomande, proto.Remotemethod.Info> getInviaDomandeMethod;
+    if ((getInviaDomandeMethod = SenderGrpc.getInviaDomandeMethod) == null) {
+      synchronized (SenderGrpc.class) {
+        if ((getInviaDomandeMethod = SenderGrpc.getInviaDomandeMethod) == null) {
+          SenderGrpc.getInviaDomandeMethod = getInviaDomandeMethod = 
+              io.grpc.MethodDescriptor.<proto.Remotemethod.ListaDomande, proto.Remotemethod.Info>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "Sender", "inviaDomande"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  proto.Remotemethod.ListaDomande.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  proto.Remotemethod.Info.getDefaultInstance()))
+                  .setSchemaDescriptor(new SenderMethodDescriptorSupplier("inviaDomande"))
+                  .build();
+          }
+        }
+     }
+     return getInviaDomandeMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<proto.Remotemethod.RispostaAppello,
@@ -204,9 +236,16 @@ public final class SenderGrpc {
 
     /**
      */
-    public void caricaDomandeAppello(proto.Remotemethod.Info request,
-        io.grpc.stub.StreamObserver<proto.Remotemethod.ListaDomande> responseObserver) {
-      asyncUnimplementedUnaryCall(getCaricaDomandeAppelloMethod(), responseObserver);
+    public void partecipaEsame(proto.Remotemethod.pRequest request,
+        io.grpc.stub.StreamObserver<proto.Remotemethod.Info> responseObserver) {
+      asyncUnimplementedUnaryCall(getPartecipaEsameMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void inviaDomande(proto.Remotemethod.ListaDomande request,
+        io.grpc.stub.StreamObserver<proto.Remotemethod.Info> responseObserver) {
+      asyncUnimplementedUnaryCall(getInviaDomandeMethod(), responseObserver);
     }
 
     /**
@@ -233,12 +272,19 @@ public final class SenderGrpc {
                 proto.Remotemethod.CodiceAppello>(
                   this, METHODID_REGISTRA_STUDENTE)))
           .addMethod(
-            getCaricaDomandeAppelloMethod(),
+            getPartecipaEsameMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                proto.Remotemethod.Info,
-                proto.Remotemethod.ListaDomande>(
-                  this, METHODID_CARICA_DOMANDE_APPELLO)))
+                proto.Remotemethod.pRequest,
+                proto.Remotemethod.Info>(
+                  this, METHODID_PARTECIPA_ESAME)))
+          .addMethod(
+            getInviaDomandeMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                proto.Remotemethod.ListaDomande,
+                proto.Remotemethod.Info>(
+                  this, METHODID_INVIA_DOMANDE)))
           .addMethod(
             getInviaRisposteMethod(),
             asyncUnaryCall(
@@ -289,10 +335,18 @@ public final class SenderGrpc {
 
     /**
      */
-    public void caricaDomandeAppello(proto.Remotemethod.Info request,
-        io.grpc.stub.StreamObserver<proto.Remotemethod.ListaDomande> responseObserver) {
+    public void partecipaEsame(proto.Remotemethod.pRequest request,
+        io.grpc.stub.StreamObserver<proto.Remotemethod.Info> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getCaricaDomandeAppelloMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getPartecipaEsameMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void inviaDomande(proto.Remotemethod.ListaDomande request,
+        io.grpc.stub.StreamObserver<proto.Remotemethod.Info> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getInviaDomandeMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -341,9 +395,16 @@ public final class SenderGrpc {
 
     /**
      */
-    public proto.Remotemethod.ListaDomande caricaDomandeAppello(proto.Remotemethod.Info request) {
+    public proto.Remotemethod.Info partecipaEsame(proto.Remotemethod.pRequest request) {
       return blockingUnaryCall(
-          getChannel(), getCaricaDomandeAppelloMethod(), getCallOptions(), request);
+          getChannel(), getPartecipaEsameMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public proto.Remotemethod.Info inviaDomande(proto.Remotemethod.ListaDomande request) {
+      return blockingUnaryCall(
+          getChannel(), getInviaDomandeMethod(), getCallOptions(), request);
     }
 
     /**
@@ -393,10 +454,18 @@ public final class SenderGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<proto.Remotemethod.ListaDomande> caricaDomandeAppello(
-        proto.Remotemethod.Info request) {
+    public com.google.common.util.concurrent.ListenableFuture<proto.Remotemethod.Info> partecipaEsame(
+        proto.Remotemethod.pRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(getCaricaDomandeAppelloMethod(), getCallOptions()), request);
+          getChannel().newCall(getPartecipaEsameMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<proto.Remotemethod.Info> inviaDomande(
+        proto.Remotemethod.ListaDomande request) {
+      return futureUnaryCall(
+          getChannel().newCall(getInviaDomandeMethod(), getCallOptions()), request);
     }
 
     /**
@@ -410,8 +479,9 @@ public final class SenderGrpc {
 
   private static final int METHODID_CARICA_APPELLI = 0;
   private static final int METHODID_REGISTRA_STUDENTE = 1;
-  private static final int METHODID_CARICA_DOMANDE_APPELLO = 2;
-  private static final int METHODID_INVIA_RISPOSTE = 3;
+  private static final int METHODID_PARTECIPA_ESAME = 2;
+  private static final int METHODID_INVIA_DOMANDE = 3;
+  private static final int METHODID_INVIA_RISPOSTE = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -438,9 +508,13 @@ public final class SenderGrpc {
           serviceImpl.registraStudente((proto.Remotemethod.Studente) request,
               (io.grpc.stub.StreamObserver<proto.Remotemethod.CodiceAppello>) responseObserver);
           break;
-        case METHODID_CARICA_DOMANDE_APPELLO:
-          serviceImpl.caricaDomandeAppello((proto.Remotemethod.Info) request,
-              (io.grpc.stub.StreamObserver<proto.Remotemethod.ListaDomande>) responseObserver);
+        case METHODID_PARTECIPA_ESAME:
+          serviceImpl.partecipaEsame((proto.Remotemethod.pRequest) request,
+              (io.grpc.stub.StreamObserver<proto.Remotemethod.Info>) responseObserver);
+          break;
+        case METHODID_INVIA_DOMANDE:
+          serviceImpl.inviaDomande((proto.Remotemethod.ListaDomande) request,
+              (io.grpc.stub.StreamObserver<proto.Remotemethod.Info>) responseObserver);
           break;
         case METHODID_INVIA_RISPOSTE:
           serviceImpl.inviaRisposte((proto.Remotemethod.RispostaAppello) request,
@@ -509,7 +583,8 @@ public final class SenderGrpc {
               .setSchemaDescriptor(new SenderFileDescriptorSupplier())
               .addMethod(getCaricaAppelliMethod())
               .addMethod(getRegistraStudenteMethod())
-              .addMethod(getCaricaDomandeAppelloMethod())
+              .addMethod(getPartecipaEsameMethod())
+              .addMethod(getInviaDomandeMethod())
               .addMethod(getInviaRisposteMethod())
               .build();
         }
