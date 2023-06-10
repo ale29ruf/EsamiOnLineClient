@@ -1,8 +1,11 @@
 package strategyvisualizer;
 
+import component.Model;
+import proto.Remotemethod;
+
 import javax.swing.*;
 
 public interface Strategy {
 
-    void proietta(JComponent component);
+    JList<Remotemethod.Appello> proietta(Model source, JComponent destination);
 }

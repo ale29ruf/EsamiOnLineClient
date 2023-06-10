@@ -22,10 +22,9 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
         stub = SenderGrpc.newBlockingStub(channel);
     }
 
-
-
     @Override
     public void caricaAppelli() {
+        super.comunicaCaricamentoAppello();
         Runnable task = () -> {
             Remotemethod.Info info = Remotemethod.Info.newBuilder().build();
             Remotemethod.ListaAppelli appelli = stub.caricaAppelli(info);

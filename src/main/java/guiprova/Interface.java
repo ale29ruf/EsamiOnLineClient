@@ -1,4 +1,4 @@
-package gui;
+package guiprova;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,10 +68,10 @@ public class Interface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aggiunta dello JScrollPane al content pane del frame
-
+                scrollPane.setVisible(true);
                 prenotaButton.setVisible(true);
                 prenotaButton.setEnabled(false);
-                scrollPane.setVisible(true);
+
             }
         });
 
@@ -89,9 +89,18 @@ public class Interface {
             }
         });
 
+        JButton cambiaScenario = new JButton("Cambia Scenario");
+        cambiaScenario.addActionListener((evt)-> {
+            panel1.removeAll();
+            panel1.revalidate();
+            panel1.repaint();
+            scrollPane.setEnabled(false);
+        });
+
         selettore.add(visualizzaAppelliButton);
         selettore.add(partecipaAppelliButton);
         selettore.add(prenotaButton);
+        selettore.add(cambiaScenario);
 
         f.add(selettore, BorderLayout.PAGE_START);
         f.add(panel1, BorderLayout.CENTER);
@@ -104,6 +113,7 @@ public class Interface {
                 prenotaButton.setEnabled(true);
             }
         });
+
 
 
 
