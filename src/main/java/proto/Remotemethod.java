@@ -1419,21 +1419,31 @@ public final class Remotemethod {
     int getId();
 
     /**
-     * <code>string ora = 2;</code>
+     * <code>string nome = 2;</code>
+     */
+    java.lang.String getNome();
+    /**
+     * <code>string nome = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getNomeBytes();
+
+    /**
+     * <code>string ora = 3;</code>
      */
     java.lang.String getOra();
     /**
-     * <code>string ora = 2;</code>
+     * <code>string ora = 3;</code>
      */
     com.google.protobuf.ByteString
         getOraBytes();
 
     /**
-     * <code>string durata = 3;</code>
+     * <code>string durata = 4;</code>
      */
     java.lang.String getDurata();
     /**
-     * <code>string durata = 3;</code>
+     * <code>string durata = 4;</code>
      */
     com.google.protobuf.ByteString
         getDurataBytes();
@@ -1452,6 +1462,7 @@ public final class Remotemethod {
     }
     private Appello() {
       id_ = 0;
+      nome_ = "";
       ora_ = "";
       durata_ = "";
     }
@@ -1488,10 +1499,16 @@ public final class Remotemethod {
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              ora_ = s;
+              nome_ = s;
               break;
             }
             case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              ora_ = s;
+              break;
+            }
+            case 34: {
               java.lang.String s = input.readStringRequireUtf8();
 
               durata_ = s;
@@ -1538,10 +1555,44 @@ public final class Remotemethod {
       return id_;
     }
 
-    public static final int ORA_FIELD_NUMBER = 2;
+    public static final int NOME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object nome_;
+    /**
+     * <code>string nome = 2;</code>
+     */
+    public java.lang.String getNome() {
+      java.lang.Object ref = nome_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nome_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string nome = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNomeBytes() {
+      java.lang.Object ref = nome_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nome_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ORA_FIELD_NUMBER = 3;
     private volatile java.lang.Object ora_;
     /**
-     * <code>string ora = 2;</code>
+     * <code>string ora = 3;</code>
      */
     public java.lang.String getOra() {
       java.lang.Object ref = ora_;
@@ -1556,7 +1607,7 @@ public final class Remotemethod {
       }
     }
     /**
-     * <code>string ora = 2;</code>
+     * <code>string ora = 3;</code>
      */
     public com.google.protobuf.ByteString
         getOraBytes() {
@@ -1572,10 +1623,10 @@ public final class Remotemethod {
       }
     }
 
-    public static final int DURATA_FIELD_NUMBER = 3;
+    public static final int DURATA_FIELD_NUMBER = 4;
     private volatile java.lang.Object durata_;
     /**
-     * <code>string durata = 3;</code>
+     * <code>string durata = 4;</code>
      */
     public java.lang.String getDurata() {
       java.lang.Object ref = durata_;
@@ -1590,7 +1641,7 @@ public final class Remotemethod {
       }
     }
     /**
-     * <code>string durata = 3;</code>
+     * <code>string durata = 4;</code>
      */
     public com.google.protobuf.ByteString
         getDurataBytes() {
@@ -1623,11 +1674,14 @@ public final class Remotemethod {
       if (id_ != 0) {
         output.writeInt32(1, id_);
       }
+      if (!getNomeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nome_);
+      }
       if (!getOraBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, ora_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, ora_);
       }
       if (!getDurataBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, durata_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, durata_);
       }
       unknownFields.writeTo(output);
     }
@@ -1642,11 +1696,14 @@ public final class Remotemethod {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, id_);
       }
+      if (!getNomeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nome_);
+      }
       if (!getOraBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, ora_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, ora_);
       }
       if (!getDurataBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, durata_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, durata_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1666,6 +1723,8 @@ public final class Remotemethod {
       boolean result = true;
       result = result && (getId()
           == other.getId());
+      result = result && getNome()
+          .equals(other.getNome());
       result = result && getOra()
           .equals(other.getOra());
       result = result && getDurata()
@@ -1683,6 +1742,8 @@ public final class Remotemethod {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + getId();
+      hash = (37 * hash) + NOME_FIELD_NUMBER;
+      hash = (53 * hash) + getNome().hashCode();
       hash = (37 * hash) + ORA_FIELD_NUMBER;
       hash = (53 * hash) + getOra().hashCode();
       hash = (37 * hash) + DURATA_FIELD_NUMBER;
@@ -1822,6 +1883,8 @@ public final class Remotemethod {
         super.clear();
         id_ = 0;
 
+        nome_ = "";
+
         ora_ = "";
 
         durata_ = "";
@@ -1853,6 +1916,7 @@ public final class Remotemethod {
       public proto.Remotemethod.Appello buildPartial() {
         proto.Remotemethod.Appello result = new proto.Remotemethod.Appello(this);
         result.id_ = id_;
+        result.nome_ = nome_;
         result.ora_ = ora_;
         result.durata_ = durata_;
         onBuilt();
@@ -1905,6 +1969,10 @@ public final class Remotemethod {
         if (other == proto.Remotemethod.Appello.getDefaultInstance()) return this;
         if (other.getId() != 0) {
           setId(other.getId());
+        }
+        if (!other.getNome().isEmpty()) {
+          nome_ = other.nome_;
+          onChanged();
         }
         if (!other.getOra().isEmpty()) {
           ora_ = other.ora_;
@@ -1969,9 +2037,78 @@ public final class Remotemethod {
         return this;
       }
 
+      private java.lang.Object nome_ = "";
+      /**
+       * <code>string nome = 2;</code>
+       */
+      public java.lang.String getNome() {
+        java.lang.Object ref = nome_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nome_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string nome = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNomeBytes() {
+        java.lang.Object ref = nome_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nome_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string nome = 2;</code>
+       */
+      public Builder setNome(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nome_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string nome = 2;</code>
+       */
+      public Builder clearNome() {
+        
+        nome_ = getDefaultInstance().getNome();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string nome = 2;</code>
+       */
+      public Builder setNomeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nome_ = value;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object ora_ = "";
       /**
-       * <code>string ora = 2;</code>
+       * <code>string ora = 3;</code>
        */
       public java.lang.String getOra() {
         java.lang.Object ref = ora_;
@@ -1986,7 +2123,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>string ora = 2;</code>
+       * <code>string ora = 3;</code>
        */
       public com.google.protobuf.ByteString
           getOraBytes() {
@@ -2002,7 +2139,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>string ora = 2;</code>
+       * <code>string ora = 3;</code>
        */
       public Builder setOra(
           java.lang.String value) {
@@ -2015,7 +2152,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>string ora = 2;</code>
+       * <code>string ora = 3;</code>
        */
       public Builder clearOra() {
         
@@ -2024,7 +2161,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>string ora = 2;</code>
+       * <code>string ora = 3;</code>
        */
       public Builder setOraBytes(
           com.google.protobuf.ByteString value) {
@@ -2040,7 +2177,7 @@ public final class Remotemethod {
 
       private java.lang.Object durata_ = "";
       /**
-       * <code>string durata = 3;</code>
+       * <code>string durata = 4;</code>
        */
       public java.lang.String getDurata() {
         java.lang.Object ref = durata_;
@@ -2055,7 +2192,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>string durata = 3;</code>
+       * <code>string durata = 4;</code>
        */
       public com.google.protobuf.ByteString
           getDurataBytes() {
@@ -2071,7 +2208,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>string durata = 3;</code>
+       * <code>string durata = 4;</code>
        */
       public Builder setDurata(
           java.lang.String value) {
@@ -2084,7 +2221,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>string durata = 3;</code>
+       * <code>string durata = 4;</code>
        */
       public Builder clearDurata() {
         
@@ -2093,7 +2230,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>string durata = 3;</code>
+       * <code>string durata = 4;</code>
        */
       public Builder setDurataBytes(
           com.google.protobuf.ByteString value) {
@@ -8330,26 +8467,27 @@ public final class Remotemethod {
     java.lang.String[] descriptorData = {
       "\n\022remotemethod.proto\"\025\n\004Info\022\r\n\005testo\030\001 " +
       "\001(\t\")\n\014ListaAppelli\022\031\n\007appelli\030\001 \003(\0132\010.A" +
-      "ppello\"2\n\007Appello\022\n\n\002id\030\001 \001(\005\022\013\n\003ora\030\002 \001" +
-      "(\t\022\016\n\006durata\030\003 \001(\t\"D\n\010Studente\022\021\n\tmatric" +
-      "ola\030\001 \001(\t\022\022\n\ncodFiscale\030\002 \001(\t\022\021\n\tidAppel" +
-      "lo\030\003 \001(\005\"\037\n\rCodiceAppello\022\016\n\006codice\030\001 \001(" +
-      "\t\")\n\014ListaDomande\022\031\n\007domande\030\001 \003(\0132\010.Dom" +
-      "anda\"\030\n\007Domanda\022\r\n\005testo\030\001 \001(\t\"K\n\017Rispos" +
-      "taAppello\022\021\n\tidAppello\030\001 \001(\005\022%\n\rlistaRis" +
-      "poste\030\002 \001(\0132\016.ListaRisposte\"\034\n\010Risposta\022" +
-      "\020\n\010risposta\030\001 \001(\005\"N\n\010pRequest\022!\n\tcodApel" +
-      "lo\030\001 \001(\0132\016.CodiceAppello\022\021\n\thostaname\030\002 " +
-      "\001(\t\022\014\n\004port\030\003 \001(\005\"U\n\006Modulo\022\021\n\tidAppello" +
-      "\030\001 \001(\005\022%\n\rlistaRisposte\030\002 \001(\0132\016.ListaRis" +
-      "poste\022\021\n\tpunteggio\030\003 \001(\005\",\n\rListaRispost" +
-      "e\022\033\n\010risposte\030\001 \003(\0132\t.Risposta2\336\001\n\006Sende" +
-      "r\022\'\n\rCaricaAppelli\022\005.Info\032\r.ListaAppelli" +
-      "\"\000\022/\n\020RegistraStudente\022\t.Studente\032\016.Codi" +
-      "ceAppello\"\000\022$\n\016PartecipaEsame\022\t.pRequest" +
-      "\032\005.Info\"\000\022&\n\014inviaDomande\022\r.ListaDomande" +
-      "\032\005.Info\"\000\022,\n\rInviaRisposte\022\020.RispostaApp" +
-      "ello\032\007.Modulo\"\000B\007\n\005protob\006proto3"
+      "ppello\"@\n\007Appello\022\n\n\002id\030\001 \001(\005\022\014\n\004nome\030\002 " +
+      "\001(\t\022\013\n\003ora\030\003 \001(\t\022\016\n\006durata\030\004 \001(\t\"D\n\010Stud" +
+      "ente\022\021\n\tmatricola\030\001 \001(\t\022\022\n\ncodFiscale\030\002 " +
+      "\001(\t\022\021\n\tidAppello\030\003 \001(\005\"\037\n\rCodiceAppello\022" +
+      "\016\n\006codice\030\001 \001(\t\")\n\014ListaDomande\022\031\n\007doman" +
+      "de\030\001 \003(\0132\010.Domanda\"\030\n\007Domanda\022\r\n\005testo\030\001" +
+      " \001(\t\"K\n\017RispostaAppello\022\021\n\tidAppello\030\001 \001" +
+      "(\005\022%\n\rlistaRisposte\030\002 \001(\0132\016.ListaRispost" +
+      "e\"\034\n\010Risposta\022\020\n\010risposta\030\001 \001(\005\"N\n\010pRequ" +
+      "est\022!\n\tcodApello\030\001 \001(\0132\016.CodiceAppello\022\021" +
+      "\n\thostaname\030\002 \001(\t\022\014\n\004port\030\003 \001(\005\"U\n\006Modul" +
+      "o\022\021\n\tidAppello\030\001 \001(\005\022%\n\rlistaRisposte\030\002 " +
+      "\001(\0132\016.ListaRisposte\022\021\n\tpunteggio\030\003 \001(\005\"," +
+      "\n\rListaRisposte\022\033\n\010risposte\030\001 \003(\0132\t.Risp" +
+      "osta2\336\001\n\006Sender\022\'\n\rCaricaAppelli\022\005.Info\032" +
+      "\r.ListaAppelli\"\000\022/\n\020RegistraStudente\022\t.S" +
+      "tudente\032\016.CodiceAppello\"\000\022$\n\016PartecipaEs" +
+      "ame\022\t.pRequest\032\005.Info\"\000\022&\n\014inviaDomande\022" +
+      "\r.ListaDomande\032\005.Info\"\000\022,\n\rInviaRisposte" +
+      "\022\020.RispostaAppello\032\007.Modulo\"\000B\007\n\005protob\006" +
+      "proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -8380,7 +8518,7 @@ public final class Remotemethod {
     internal_static_Appello_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Appello_descriptor,
-        new java.lang.String[] { "Id", "Ora", "Durata", });
+        new java.lang.String[] { "Id", "Nome", "Ora", "Durata", });
     internal_static_Studente_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_Studente_fieldAccessorTable = new

@@ -7,5 +7,5 @@ import javax.swing.*;
 
 public interface Strategy {
 
-    JList<Remotemethod.Appello> proietta(Model source, JComponent destination);
+    JTable proietta(Model source, JComponent destination);
 }

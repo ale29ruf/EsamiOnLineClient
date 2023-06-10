@@ -6,7 +6,8 @@ import proto.Remotemethod;
 import strategyvisualizer.Strategy;
 
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.concurrent.locks.Lock;
@@ -22,6 +23,8 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     JTextArea logger;
     JButton caricaAppelli;
     JButton prenotaButton;
+    JButton partecipaButton;
+    JButton interrompiOpButton;
     ListaAppelli appelli = new ListaAppelli(this);
 
     public void setPannello(JPanel pannello){
@@ -43,14 +46,20 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         caricaAppelli.setEnabled(true);
     }
 
-    public void setPartecipaButton(JButton prenotaButton){
+    public void setPartecipaAppelliButton(JButton partecipaButton){
+        this.partecipaButton = partecipaButton;
+        partecipaButton.setVisible(true);
+        partecipaButton.setEnabled(true);
+    }
+
+    public void setPrenotaButton(JButton prenotaButton){
         this.prenotaButton = prenotaButton;
         prenotaButton.setEnabled(false);
         prenotaButton.setVisible(false);
     }
 
-    public void setAppelli(ListaAppelli appelli){
-        this.appelli = appelli;
+    public void setInterrompiOpButton(JButton interrompiOpButton){
+        this.interrompiOpButton = interrompiOpButton;
     }
 
 
@@ -67,19 +76,23 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
 
         pannello.removeAll();
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaAppelli.class);
-        JList<Remotemethod.Appello> appelloJList = visualizer.proietta(listaAppelli,pannello);
+        JTable appelloJTabel = visualizer.proietta(listaAppelli,pannello);
 
         pannello.revalidate();
         pannello.repaint();
 
+
         prenotaButton.setVisible(true);
-        appelloJList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                prenotaButton.setEnabled(true);
+        appelloJTabel.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                // Codice da eseguire quando viene selezionata una riga
+                if (!event.getValueIsAdjusting()) {
+                    //int selectedRow = appelloJTabel.getSelectedRow();
+                    prenotaButton.setEnabled(true);
+                }
             }
         });
+
         logger.setText("Appelli caricati");
     }
 
