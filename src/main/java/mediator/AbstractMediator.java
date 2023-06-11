@@ -1,12 +1,13 @@
 package mediator;
 
-import protoadapter.CollegueViewFactory;
-import protoadapter.AppelliProtoAdapter;
-import protoadapter.CodiceAppelloAdapter;
-import protoadapter.InfoProtoAdapter;
+import commands.RecivitoreListaDomande;
+import protoadapter.*;
 import strategyvisualizer.Strategy;
 
 import javax.swing.*;
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -15,6 +16,9 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     boolean interrupt = false;
     Lock l = new ReentrantLock();
 
+    Executor esecutore = Executors.newSingleThreadExecutor();
+    final int port = 9000;
+
     JPanel pannello;
     JToolBar barraControllo;
     JTextArea logger;
@@ -22,6 +26,8 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     JButton prenotaButton;
     JButton partecipaButton;
     JButton interrompiOpButton;
+    JButton confermaButton;
+
 
     int idAppello;
 
@@ -57,22 +63,12 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         prenotaButton.setVisible(false);
     }
 
-    public void setInterrompiOpButton(JButton interrompiOpButton){
-        this.interrompiOpButton = interrompiOpButton;
+    public void setConfermaButton(JButton confermaButton){
+        this.confermaButton = confermaButton;
     }
 
 
     public void notificaComponenti(AppelliProtoAdapter listaAppelli){
-        try{
-            l.lock();
-            if(interrupt){
-                comunicaLogger("Appelli non caricati");
-                interrupt = false;
-                return;
-            }
-        } finally {
-            l.unlock();
-        }
 
         pannello.removeAll();
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(AppelliProtoAdapter.class);
@@ -100,16 +96,6 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
     public void rispostaPartecipazione(InfoProtoAdapter infoProtoAdapter) {
-        try{
-            l.lock();
-            if(interrupt){
-                comunicaLogger("Partecipazione interrotta");
-                interrupt = false;
-                return;
-            }
-        } finally {
-            l.unlock();
-        }
 
         String risposta = infoProtoAdapter.getTesto();
         if(risposta.contains("ERRORE")){
@@ -118,7 +104,15 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
             pannello.removeAll();
             pannello.revalidate();
             pannello.repaint();
+            Model m = new ListaDomandeProtoAdapter(this);
+            RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
+            esecutore.execute(task);
         }
+    }
+
+    public void domandeRicevute(ListaDomandeProtoAdapter domande){
+        Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaDomandeProtoAdapter.class);
+        List<Integer> risposte = (List<Integer>) visualizer.proietta(domande,pannello); //????????
     }
 
     public void comunicaCaricamentoAppello(){
@@ -135,17 +129,6 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         try{
             l.lock();
             logger.setText(comunicazione); //il thread principale e quello delegato all'esecutore potrebbero generare race condition
-        } finally {
-            l.unlock();
-        }
-    }
-
-    @Override
-    public void interrompiCaricamento() {
-        try{
-            l.lock();
-            logger.setText("Operazione interrotta");
-            interrupt = true;
         } finally {
             l.unlock();
         }

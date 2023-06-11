@@ -19,12 +19,10 @@ import java.util.concurrent.Executors;
 
 public class Controller extends AbstractMediator{ //Si occupa della comunicazione remota
 
-    Executor esecutore = Executors.newSingleThreadExecutor();
     ManagedChannel channel;
     SenderGrpc.SenderBlockingStub stub;
 
     final String hostname = "localhost";
-    final int port = 9000;
 
 
 
@@ -72,4 +70,6 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
         }
 
     }
+
+
 }
