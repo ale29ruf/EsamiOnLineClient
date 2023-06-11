@@ -3,6 +3,7 @@ package mediator;
 import protoadapter.CollegueViewFactory;
 import protoadapter.AppelliProtoAdapter;
 import protoadapter.CodiceAppelloAdapter;
+import protoadapter.InfoProtoAdapter;
 import strategyvisualizer.Strategy;
 
 import javax.swing.*;
@@ -65,7 +66,7 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         try{
             l.lock();
             if(interrupt){
-                logger.setText("Appelli non caricati");
+                comunicaLogger("Appelli non caricati");
                 interrupt = false;
                 return;
             }
@@ -76,10 +77,8 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         pannello.removeAll();
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(AppelliProtoAdapter.class);
         JTable appelloJTabel = visualizer.proietta(listaAppelli,pannello);
-
         pannello.revalidate();
         pannello.repaint();
-
 
         prenotaButton.setVisible(true);
         appelloJTabel.getSelectionModel().addListSelectionListener(event -> {
@@ -90,29 +89,62 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
             }
         });
 
-        logger.setText("Appelli caricati");
+        comunicaLogger("Appelli caricati");
     }
 
     public void comunicaCodice(CodiceAppelloAdapter codice){
         if(codice.isCodice())
-            logger.setText("Codice di partecipazione esame: "+codice.get().getCodice());
+            comunicaLogger("Codice di partecipazione esame: "+codice.get().getCodice());
         else
-            logger.setText(codice.get().getCodice());
+            comunicaLogger(codice.get().getCodice());
+    }
+
+    public void rispostaPartecipazione(InfoProtoAdapter infoProtoAdapter) {
+        try{
+            l.lock();
+            if(interrupt){
+                comunicaLogger("Partecipazione interrotta");
+                interrupt = false;
+                return;
+            }
+        } finally {
+            l.unlock();
+        }
+
+        String risposta = infoProtoAdapter.getTesto();
+        if(risposta.contains("ERRORE")){
+            comunicaLogger(risposta);
+        } else {
+            pannello.removeAll();
+            pannello.revalidate();
+            pannello.repaint();
+        }
     }
 
     public void comunicaCaricamentoAppello(){
-        logger.setText("Caricamento appelli in corso ...");
+        comunicaLogger("Caricamento appelli in corso ...");
     }
 
     public void comunicaRegistrazioneInCorso(){
-        logger.setText("Prenotazione in corso ...");
+        comunicaLogger("Prenotazione in corso ...");
+    }
+
+    public void comunicaPartecipazioneInCorso(){ comunicaLogger("Partecipazione appello richiesto in corso ...");}
+
+    public void comunicaLogger(String comunicazione){
+        try{
+            l.lock();
+            logger.setText(comunicazione); //il thread principale e quello delegato all'esecutore potrebbero generare race condition
+        } finally {
+            l.unlock();
+        }
     }
 
     @Override
     public void interrompiCaricamento() {
-        logger.setText("Richiesta interruzione operazione in corso ...");
         try{
             l.lock();
+            logger.setText("Operazione interrotta");
             interrupt = true;
         } finally {
             l.unlock();

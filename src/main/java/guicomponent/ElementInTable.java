@@ -11,7 +11,7 @@ public class ElementInTable extends AbstractTableModel {
     List<Remotemethod.Appello> appelli;
 
     public ElementInTable(AppelliProtoAdapter appelli){
-        this.appelli = appelli.getList();
+        this.appelli = appelli.getAppelliList();
     }
 
     @Override

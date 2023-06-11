@@ -2,6 +2,9 @@ package mediator;
 
 import commands.CaricaAppelli;
 import commands.InviaRegistrazioneStudente;
+import commands.RichiestaPartecipazioneAppello;
+import guicomponent.JDialogCod;
+import protoadapter.InfoProtoAdapter;
 import protoadapter.Model;
 import guicomponent.JDialogLog;
 import io.grpc.ManagedChannel;
@@ -19,6 +22,10 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
     Executor esecutore = Executors.newSingleThreadExecutor();
     ManagedChannel channel;
     SenderGrpc.SenderBlockingStub stub;
+
+    final String hostname = "localhost";
+    final int port = 9000;
+
 
 
     public Controller(String hostname, int port){
@@ -50,5 +57,19 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
         }
     }
 
+    @Override
+    public void partecipaAppello(JButton widget) {
+        comunicaPartecipazioneInCorso();
+        JFrame f = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, widget);
+        JDialogCod jDialogCod = new JDialogCod(f);
+        jDialogCod.setVisible(true);
 
+        if(jDialogCod.isConfirmed()){
+            String codice = jDialogCod.getCodice();
+            Model m = new InfoProtoAdapter(this);
+            RichiestaPartecipazioneAppello task = new RichiestaPartecipazioneAppello(m,stub,codice,hostname,port);
+            esecutore.execute(task);
+        }
+
+    }
 }

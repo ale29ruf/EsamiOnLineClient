@@ -45,6 +45,8 @@ public class Interface {
 
         prenotaButton.addActionListener((evt) -> mediatore.registraStudente(prenotaButton));
 
+        partecipaAppelliButton.addActionListener(evt -> mediatore.partecipaAppello(partecipaAppelliButton));
+
         f.add(selettore, BorderLayout.PAGE_START);
         f.add(panel, BorderLayout.CENTER);
 

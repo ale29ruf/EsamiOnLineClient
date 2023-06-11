@@ -11,4 +11,6 @@ public interface Mediatore {
 
     void registraStudente(JButton widget);
 
+    void partecipaAppello(JButton widget);
+
 }

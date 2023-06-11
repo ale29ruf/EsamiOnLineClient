@@ -8,14 +8,7 @@ import protoadapter.CodiceAppelloAdapter;
 public class InviaRegistrazioneStudente extends Thread{
     Model model;
     SenderGrpc.SenderBlockingStub stub;
-
     Remotemethod.Studente studente;
-
-
-    public InviaRegistrazioneStudente(Model model, SenderGrpc.SenderBlockingStub stub){
-        this.model = model;
-        this.stub = stub;
-    }
 
     public InviaRegistrazioneStudente(Model m, SenderGrpc.SenderBlockingStub stub, String matricola, String codFiscale, int idAppello) {
         this.model = m;

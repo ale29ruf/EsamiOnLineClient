@@ -19,21 +19,8 @@ public class AppelliProtoAdapter implements Model {
         this.mediator = mediator;
     }
 
-    public AppelliProtoAdapter(Remotemethod.ListaAppelli appelli){
-        this.appelli = appelli;
-    }
-
-    public List<Remotemethod.Appello> getList(){
+    public List<Remotemethod.Appello> getAppelliList(){
         return appelli.getAppelliList();
-    }
-
-    public void set(Remotemethod.ListaAppelli appelli){
-        this.appelli = appelli;
-        notifica();
-    }
-
-    public Remotemethod.ListaAppelli get(){
-        return appelli;
     }
 
     @Override
@@ -42,8 +29,8 @@ public class AppelliProtoAdapter implements Model {
     }
 
     @Override
-    public void setRemoteInfo(MessageOrBuilder model) {
-        this.appelli = (Remotemethod.ListaAppelli) model;
+    public void setRemoteInfo(MessageOrBuilder remoteInfo) {
+        this.appelli = (Remotemethod.ListaAppelli) remoteInfo;
         notifica();
     }
 }
