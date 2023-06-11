@@ -1,7 +1,6 @@
 package strategyvisualizer;
 
-import component.Model;
-import proto.Remotemethod;
+import protoadapter.Model;
 
 import javax.swing.*;
 

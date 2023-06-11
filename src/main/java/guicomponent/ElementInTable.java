@@ -1,19 +1,19 @@
-package strategyvisualizer;
+package guicomponent;
 
-import component.ListaAppelli;
 import proto.Remotemethod;
+import protoadapter.AppelliProtoAdapter;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class ElementInTable extends AbstractTableModel {
-    private String[] columnNames = {"Id appello", "Nome", "Data e ora", "Durata"};
+    private final String[] columnNames = {"Id appello", "Nome", "Data e ora", "Durata"};
     List<Remotemethod.Appello> appelli;
 
-    public ElementInTable(ListaAppelli appelli){
-        this.appelli = appelli.getAppelloList();
-
+    public ElementInTable(AppelliProtoAdapter appelli){
+        this.appelli = appelli.getList();
     }
+
     @Override
     public int getRowCount() {
         return appelli.size();

@@ -1,7 +1,6 @@
-import component.CollegueViewFactory;
-import component.ListaAppelli;
+import protoadapter.AppelliProtoAdapter;
+import protoadapter.CollegueViewFactory;
 import mediator.Controller;
-import mediator.Mediatore;
 import strategyvisualizer.ListaAppelliView;
 
 import javax.swing.*;
@@ -11,12 +10,12 @@ public class Interface {
     public static void main(String[] args){
         JFrame f = new JFrame("Applicazione client-server");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(800, 600);
+        f.setMinimumSize(new Dimension(1000, 700));
         f.setLocationRelativeTo(null);
         f.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setSize(new Dimension(200,300));
+        panel.setSize(new Dimension(800,1000));
 
         JToolBar selettore  = new JToolBar();
         JButton visualizzaAppelliButton = new JButton("Visualizza appelli");
@@ -40,14 +39,16 @@ public class Interface {
         mediatore.setPrenotaButton(prenotaButton);
         mediatore.setInterrompiOpButton(interrompiOperationButton);
 
-        visualizzaAppelliButton.addActionListener((evt) -> {
-            mediatore.caricaAppelli();
-        });
+        visualizzaAppelliButton.addActionListener((evt) -> mediatore.caricaAppelli());
+
+        interrompiOperationButton.addActionListener((evt) -> mediatore.interrompiCaricamento());
+
+        prenotaButton.addActionListener((evt) -> mediatore.registraStudente(prenotaButton));
 
         f.add(selettore, BorderLayout.PAGE_START);
         f.add(panel, BorderLayout.CENTER);
 
-        CollegueViewFactory.FACTORY.installView(ListaAppelli.class,new ListaAppelliView());
+        CollegueViewFactory.FACTORY.installView(AppelliProtoAdapter.class,new ListaAppelliView());
 
         f.pack();
 

@@ -1,15 +1,11 @@
 package mediator;
 
-import component.CollegueViewFactory;
-import component.ListaAppelli;
-import proto.Remotemethod;
+import protoadapter.CollegueViewFactory;
+import protoadapter.AppelliProtoAdapter;
+import protoadapter.CodiceAppelloAdapter;
 import strategyvisualizer.Strategy;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -25,7 +21,9 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     JButton prenotaButton;
     JButton partecipaButton;
     JButton interrompiOpButton;
-    ListaAppelli appelli = new ListaAppelli(this);
+
+    int idAppello;
+
 
     public void setPannello(JPanel pannello){
         this.pannello = pannello;
@@ -63,11 +61,12 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
 
-    public void notificaComponenti(ListaAppelli listaAppelli){
+    public void notificaComponenti(AppelliProtoAdapter listaAppelli){
         try{
             l.lock();
             if(interrupt){
                 logger.setText("Appelli non caricati");
+                interrupt = false;
                 return;
             }
         } finally {
@@ -75,7 +74,7 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         }
 
         pannello.removeAll();
-        Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaAppelli.class);
+        Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(AppelliProtoAdapter.class);
         JTable appelloJTabel = visualizer.proietta(listaAppelli,pannello);
 
         pannello.revalidate();
@@ -83,21 +82,30 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
 
 
         prenotaButton.setVisible(true);
-        appelloJTabel.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                // Codice da eseguire quando viene selezionata una riga
-                if (!event.getValueIsAdjusting()) {
-                    //int selectedRow = appelloJTabel.getSelectedRow();
-                    prenotaButton.setEnabled(true);
-                }
+        appelloJTabel.getSelectionModel().addListSelectionListener(event -> {
+            // Codice da eseguire quando viene selezionata una riga
+            if (!event.getValueIsAdjusting()) {
+                idAppello = (int) appelloJTabel.getValueAt(appelloJTabel.getSelectedRow(),0);
+                prenotaButton.setEnabled(true);
             }
         });
 
         logger.setText("Appelli caricati");
     }
 
+    public void comunicaCodice(CodiceAppelloAdapter codice){
+        if(codice.isCodice())
+            logger.setText("Codice di partecipazione esame: "+codice.get().getCodice());
+        else
+            logger.setText(codice.get().getCodice());
+    }
+
     public void comunicaCaricamentoAppello(){
         logger.setText("Caricamento appelli in corso ...");
+    }
+
+    public void comunicaRegistrazioneInCorso(){
+        logger.setText("Prenotazione in corso ...");
     }
 
     @Override
@@ -110,8 +118,5 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
             l.unlock();
         }
     }
-
-
-
 
 }

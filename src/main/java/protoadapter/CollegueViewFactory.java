@@ -1,5 +1,6 @@
-package component;
+package protoadapter;
 
+import protoadapter.Model;
 import strategyvisualizer.Strategy;
 
 import java.util.HashMap;
