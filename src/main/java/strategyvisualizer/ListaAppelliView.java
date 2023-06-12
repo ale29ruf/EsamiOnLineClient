@@ -22,8 +22,6 @@ public class ListaAppelliView implements Strategy{
         panel.setLayout(new BorderLayout());
         panel.add(scrollPane);
 
-
-
         return jTable;
 
     }

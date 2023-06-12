@@ -25,8 +25,6 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     JButton caricaAppelli;
     JButton prenotaButton;
     JButton partecipaButton;
-    JButton interrompiOpButton;
-    JButton confermaButton;
 
 
     int idAppello;
@@ -63,16 +61,12 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         prenotaButton.setVisible(false);
     }
 
-    public void setConfermaButton(JButton confermaButton){
-        this.confermaButton = confermaButton;
-    }
-
 
     public void notificaComponenti(AppelliProtoAdapter listaAppelli){
 
         pannello.removeAll();
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(AppelliProtoAdapter.class);
-        JTable appelloJTabel = visualizer.proietta(listaAppelli,pannello);
+        JTable appelloJTabel = (JTable) visualizer.proietta(listaAppelli,pannello);
         pannello.revalidate();
         pannello.repaint();
 
@@ -111,8 +105,16 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
     public void domandeRicevute(ListaDomandeProtoAdapter domande){
+        disabilitaPulsanti();
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaDomandeProtoAdapter.class);
-        List<Integer> risposte = (List<Integer>) visualizer.proietta(domande,pannello); //????????
+        JButton riceviModulo = (JButton) visualizer.proietta(domande,barraControllo);
+
+    }
+
+    private void disabilitaPulsanti() {
+        caricaAppelli.setEnabled(false);
+        prenotaButton.setEnabled(false);
+        partecipaButton.setEnabled(false);
     }
 
     public void comunicaCaricamentoAppello(){
@@ -125,7 +127,7 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
 
     public void comunicaPartecipazioneInCorso(){ comunicaLogger("Partecipazione appello richiesto in corso ...");}
 
-    public void comunicaLogger(String comunicazione){
+    private void comunicaLogger(String comunicazione){
         try{
             l.lock();
             logger.setText(comunicazione); //il thread principale e quello delegato all'esecutore potrebbero generare race condition

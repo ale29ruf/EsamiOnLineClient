@@ -6,5 +6,6 @@ import javax.swing.*;
 
 public interface Strategy {
 
-    JTable proietta(Model source, JComponent destination);
+    JComponent proietta(Model source, JComponent destination);
+
 }

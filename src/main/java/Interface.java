@@ -21,11 +21,11 @@ public class Interface {
         JButton visualizzaAppelliButton = new JButton("Visualizza appelli");
         JButton prenotaButton = new JButton("Prenota");
         JButton partecipaAppelliButton = new JButton("Partecipa Appello");
-        JButton confermaButton = new JButton("Conferma");
+        //JButton confermaButton = new JButton("Conferma");
         selettore.add(visualizzaAppelliButton);
         selettore.add(partecipaAppelliButton);
         selettore.add(prenotaButton);
-        selettore.add(confermaButton);
+        //selettore.add(confermaButton);
 
         JTextArea logger = new JTextArea();
         selettore.add(logger);
@@ -37,7 +37,7 @@ public class Interface {
         mediatore.setLogger(logger);
         mediatore.setCaricaAppelliButton(visualizzaAppelliButton);
         mediatore.setPrenotaButton(prenotaButton);
-        mediatore.setConfermaButton(confermaButton);
+        //mediatore.setConfermaButton(confermaButton);
 
         visualizzaAppelliButton.addActionListener((evt) -> mediatore.caricaAppelli());
 
@@ -45,7 +45,7 @@ public class Interface {
 
         partecipaAppelliButton.addActionListener(evt -> mediatore.partecipaAppello(partecipaAppelliButton));
 
-        confermaButton.addActionListener(evt -> mediatore.confermaDomanda());
+        //confermaButton.addActionListener(evt -> mediatore.confermaDomanda());
 
         f.add(selettore, BorderLayout.PAGE_START);
         f.add(panel, BorderLayout.CENTER);

@@ -3,7 +3,6 @@ package commands;
 import protoadapter.Model;
 import proto.Remotemethod;
 import proto.SenderGrpc;
-import protoadapter.AppelliProtoAdapter;
 
 public class CaricaAppelli extends Thread{
     Model model;

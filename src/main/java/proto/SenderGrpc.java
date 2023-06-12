@@ -16,9 +16,6 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
- * <pre>
- * The greeting service definition. 
- * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.15.0)",
@@ -214,9 +211,6 @@ public final class SenderGrpc {
   }
 
   /**
-   * <pre>
-   * The greeting service definition. 
-   * </pre>
    */
   public static abstract class SenderImplBase implements io.grpc.BindableService {
 
@@ -297,9 +291,6 @@ public final class SenderGrpc {
   }
 
   /**
-   * <pre>
-   * The greeting service definition. 
-   * </pre>
    */
   public static final class SenderStub extends io.grpc.stub.AbstractStub<SenderStub> {
     private SenderStub(io.grpc.Channel channel) {
@@ -359,9 +350,6 @@ public final class SenderGrpc {
   }
 
   /**
-   * <pre>
-   * The greeting service definition. 
-   * </pre>
    */
   public static final class SenderBlockingStub extends io.grpc.stub.AbstractStub<SenderBlockingStub> {
     private SenderBlockingStub(io.grpc.Channel channel) {
@@ -416,9 +404,6 @@ public final class SenderGrpc {
   }
 
   /**
-   * <pre>
-   * The greeting service definition. 
-   * </pre>
    */
   public static final class SenderFutureStub extends io.grpc.stub.AbstractStub<SenderFutureStub> {
     private SenderFutureStub(io.grpc.Channel channel) {

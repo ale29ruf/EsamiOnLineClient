@@ -6,7 +6,6 @@ syntax = "proto3"; /* default is proto2 */
  * */
 option java_package = "proto";
 
-/* The greeting service definition. */
 service Sender {
 
   rpc CaricaAppelli (Info) returns (ListaAppelli) {}
@@ -56,6 +55,11 @@ message ListaDomande {
 
 message Domanda {
   string testo = 1;
+  ListaScelte scelte = 2;
+}
+
+message ListaScelte {
+  repeated Info scelta = 1;
 }
 
 message RispostaAppello {
