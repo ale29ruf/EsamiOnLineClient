@@ -28,8 +28,12 @@ public class JPanelQuery extends JPanel {
         }
     }
 
+    public String getTesto(){
+        return testoDomanda.getText();
+    }
+
     public int getOpzione() {
-        JRadioButton button = (JRadioButton) gruppoScelte.getSelection();
+        ButtonModel button = gruppoScelte.getSelection();
         if(button != null)
             return listaButtoni.indexOf(button);
         return -1;

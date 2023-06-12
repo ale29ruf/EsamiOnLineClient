@@ -6,13 +6,13 @@ import protoadapter.ListaDomandeProtoAdapter;
 import protoadapter.Model;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.TimeUnit;
 
 public class ListaDomandeView implements Strategy{
     final int TIMER = 5; //misurato in minuti
@@ -39,37 +39,58 @@ public class ListaDomandeView implements Strategy{
         Iterator<JPanelQuery> jPanelQueryIterator = pannelliMostrati.iterator();
         List<Integer> listaRisposte = new LinkedList<>();
 
-        boolean changingState = false;
-        Lock lock = new ReentrantLock();
+        JProgressBar progressBar = new JProgressBar(0, 100);
+        progressBar.setStringPainted(true);
+        progressBar.setValue(0);
+
+        Timer timer = new Timer(1000, new ActionListener() {
+            int time = 0;
+            int timeProg = 0;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                time++; // Incrementa il tempo
+
+                // Aggiorna la JProgressBar con il nuovo valore
+                if(time%3 == 2){
+                    timeProg++;
+                    progressBar.setValue(timeProg);
+                }
+
+                // Ferma il timer quando il tempo raggiunge 300 secondi (5 minuti)
+                if (time == 300) {
+                    progressBar.setValue(0);
+                    if (jPanelQueryIterator.hasNext())
+                        listaRisposte.add(jPanelQueryIterator.next().getOpzione());
+                    layout.next(pannello);
+                    time = 0; //utile?
+                    timeProg = 0; //utile?
+                    ((Timer) e.getSource()).restart();
+                }
+            }
+        });
+
 
         ActionListener azioneJButton = e -> {
-            lock.lock();
-            if( !changingState ) {
-                if (jPanelQueryIterator.hasNext())
-                    listaRisposte.add(jPanelQueryIterator.next().getOpzione());
-                layout.next(pannello);
+            timer.stop();
+            if (jPanelQueryIterator.hasNext()) {
+                listaRisposte.add(jPanelQueryIterator.next().getOpzione());
+                if(jPanelQueryIterator.hasNext()){
+                    layout.next(pannello);
+                    timer.start();
+                }
             }
         };
         JButton conferma = new JButton("Conferma");
         conferma.addActionListener(azioneJButton);
-        pannello.add(conferma, BorderLayout.SOUTH);
+        pannello.add(conferma, BorderLayout.EAST);
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            int cnt = 0;
-            @Override
-            public void run() {
-                if(cnt < domande.size()){
-                    azioneJButton.actionPerformed(null);
-                    cnt++;
-                } else {
-                    timer.cancel();
-                }
+        pannello.add(progressBar, BorderLayout.SOUTH);
 
-            }
-        }, 0, TIMER * 60 * 1000);
-
+        layout.next(pannello); //visualizza prima domanda
+        timer.start();
 
         return null;
     }
+
 }
+

@@ -1,7 +1,9 @@
 import protoadapter.AppelliProtoAdapter;
 import protoadapter.CollegueViewFactory;
 import mediator.Controller;
+import protoadapter.ListaDomandeProtoAdapter;
 import strategyvisualizer.ListaAppelliView;
+import strategyvisualizer.ListaDomandeView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,6 +53,7 @@ public class Interface {
         f.add(panel, BorderLayout.CENTER);
 
         CollegueViewFactory.FACTORY.installView(AppelliProtoAdapter.class,new ListaAppelliView());
+        CollegueViewFactory.FACTORY.installView(ListaDomandeProtoAdapter.class, new ListaDomandeView());
 
         f.pack();
 

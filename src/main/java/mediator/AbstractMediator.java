@@ -5,17 +5,15 @@ import protoadapter.*;
 import strategyvisualizer.Strategy;
 
 import javax.swing.*;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class AbstractMediator implements Mediatore{ //Si occupa della comunicazione locale
 
-    boolean interrupt = false;
     Lock l = new ReentrantLock();
-
     Executor esecutore = Executors.newSingleThreadExecutor();
     final int port = 9000;
 
@@ -90,22 +88,24 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
     public void rispostaPartecipazione(InfoProtoAdapter infoProtoAdapter) {
-
         String risposta = infoProtoAdapter.getTesto();
-        if(risposta.contains("ERRORE")){
-            comunicaLogger(risposta);
-        } else {
-            pannello.removeAll();
-            pannello.revalidate();
-            pannello.repaint();
-            Model m = new ListaDomandeProtoAdapter(this);
-            RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
-            esecutore.execute(task);
-        }
+        System.out.println(risposta);
+        comunicaLogger(risposta);
+        if(risposta.contains("ERRORE"))
+            return;
+
+
+        disabilitaPulsanti();
+        pannello.removeAll();
+        pannello.revalidate();
+        pannello.repaint();
+        Model m = new ListaDomandeProtoAdapter(this);
+        RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
+        esecutore.execute(task);
+
     }
 
     public void domandeRicevute(ListaDomandeProtoAdapter domande){
-        disabilitaPulsanti();
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaDomandeProtoAdapter.class);
         JButton riceviModulo = (JButton) visualizer.proietta(domande,barraControllo);
 
