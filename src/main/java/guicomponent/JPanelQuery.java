@@ -44,6 +44,7 @@ public class JPanelQuery extends JPanel {
 
     public void avvia(){
         gestoreBarra = new ProgressBarHandler(progressBar);
+        System.out.println("Thread settato da "+Thread.currentThread().getName());
         gestoreBarra.start();
     }
 

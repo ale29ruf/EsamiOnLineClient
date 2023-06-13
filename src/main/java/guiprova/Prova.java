@@ -15,7 +15,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Prova {
 
-    static HandlerTimeout gestoreQuery;
+    static int nDomande = 5;
+    static int timeInMilliSecond = 10;
+    static int pass = 0;
+    static int ritardo = 10;
 
     public static void main(String[] args){
 
@@ -64,7 +67,6 @@ public class Prova {
 
         PannelloQuery pannelloQuery = new PannelloQuery(); //cambiato ogni volta per mostrare il pannello contenente la query corretta
 
-
         JPanelQuery primoPannello = codaJPanelQueryDaMostrare.peek();
         pannelloQuery.setPannello(primoPannello);
         primoPannello.avvia();
@@ -75,14 +77,25 @@ public class Prova {
         JButton concludiTest = new JButton("Concludi Test");
         concludiTest.setVisible(false);
 
-        gestoreQuery = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
-        gestoreQuery.start();
+        LinkedList<HandlerTimeout> timeouts = new LinkedList<>();
+        for(int i=0; i<nDomande; i++){
+            HandlerTimeout timeout = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest,timeInMilliSecond*i + timeInMilliSecond);
+            timeouts.add(timeout);
+            timeout.start();
+        }
+
 
         ActionListener azioneDiConferma = e -> {
-            gestoreQuery.interrupt();
+            while(timeouts.get(pass).eInterrotto()){
+                pass++;
+            }
+            System.out.println("All'interno dell'ActionListener");
+            timeouts.get(pass).interrompi();
+            pass++;
+            HandlerTimeout timeoutSuccessivo = timeouts.get(pass);
+            if(timeoutSuccessivo != null)
+                timeoutSuccessivo.ritarda();
             changeQuery(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
-            gestoreQuery = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
-            gestoreQuery.start();
         };
 
         conferma.addActionListener(azioneDiConferma);
@@ -95,6 +108,7 @@ public class Prova {
 
 
     }
+
 
     public static void changeQuery(java.util.Queue<JPanelQuery> codaJPanelQueryDaMostrare,java.util.List<Integer> listaRisposte,PannelloQuery pannelloQuery,
                              JButton conferma,JButton concludiTest){
@@ -109,6 +123,8 @@ public class Prova {
             pannelloQuery.setPannello(codaJPanelQueryDaMostrare.peek());
         }
     }
+
+
 
     private static java.util.List<Remotemethod.Domanda> ottieniDomande() {
         Remotemethod.Domanda domanda1 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 1 ?").setScelte(ottieniScelte()).build();
@@ -138,10 +154,14 @@ public class Prova {
     }
 }
 
+
 class HandlerTimeout extends Thread{
 
+    boolean stop = false;
+    int time;
     Queue<JPanelQuery> codaJPanelQueryDaMostrare; List<Integer> listaRisposte; PannelloQuery pannelloQuery; JButton conferma; JButton concludiTest;
-    public HandlerTimeout(Queue<JPanelQuery> codaJPanelQueryDaMostrare, List<Integer> listaRisposte, PannelloQuery pannelloQuery, JButton conferma, JButton concludiTest) {
+    public HandlerTimeout(java.util.Queue<JPanelQuery> codaJPanelQueryDaMostrare, List<Integer> listaRisposte, PannelloQuery pannelloQuery, JButton conferma, JButton concludiTest, int time) {
+        this.time = time;
         this.codaJPanelQueryDaMostrare = codaJPanelQueryDaMostrare;
         this.listaRisposte = listaRisposte;
         this.pannelloQuery = pannelloQuery;
@@ -151,28 +171,36 @@ class HandlerTimeout extends Thread{
 
     public void run(){
         try {
-            TimeUnit.SECONDS.sleep(10);
+            TimeUnit.SECONDS.sleep(time);
         } catch (InterruptedException e) {
-            System.out.println();
+            System.out.println("Catch dell'InterruptedException");
         }
-        JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
-        listaRisposte.add((jPanelQuery.getOpzione()));
-        pannelloQuery.removePannello();
-        if(codaJPanelQueryDaMostrare.isEmpty()){
-            System.out.println(listaRisposte);
-            conferma.setVisible(false);
-            concludiTest.setVisible(true);
-        } else {
-            pannelloQuery.setPannello(codaJPanelQueryDaMostrare.peek());
-
-            Runnable cambiaHandlerTimeout = () -> {
-                Prova.gestoreQuery = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
-                Prova.gestoreQuery.start();
-            };
-            Thread thread = new Thread(cambiaHandlerTimeout);
-            thread.start();
-
+        if(stop) {
+            System.out.println("Non faccio nulla dato che sono interrotto");
+            return;
         }
+        try {
+            TimeUnit.SECONDS.sleep(Prova.ritardo);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(stop) {
+            System.out.println("Non faccio nulla dato che sono interrotto");
+            return;
+        }
+        Prova.changeQuery(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
+    }
+
+    public void interrompi() {
+        stop=true;
+    }
+
+    public boolean eInterrotto(){
+        return stop;
+    }
+
+    public void ritarda() {
+        interrupt();
     }
 }
 
