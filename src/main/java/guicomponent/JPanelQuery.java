@@ -13,8 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class JPanelQuery extends JPanel {
     private JLabel testoDomanda;
-    private ButtonGroup gruppoScelte;
-    private List<JRadioButton> listaButtoni;
+    private List<JCheckBox> listaButtoni;
     JProgressBar progressBar;
     ProgressBarHandler gestoreBarra;
 
@@ -30,11 +29,9 @@ public class JPanelQuery extends JPanel {
         add(testoDomanda, BorderLayout.EAST);
 
         listaButtoni = new LinkedList<>();
-        gruppoScelte = new ButtonGroup();
         for(Remotemethod.Info scelta : domanda.getScelte().getSceltaList()) {
-            JRadioButton button = new JRadioButton(scelta.getTesto());
+            JCheckBox button = new JCheckBox(scelta.getTesto());
             listaButtoni.add(button);
-            gruppoScelte.add(button);
             add(button);
         }
 
@@ -50,9 +47,10 @@ public class JPanelQuery extends JPanel {
 
     public int getOpzione() {
         gestoreBarra.interrupt();
-        ButtonModel button = gruppoScelte.getSelection();
-        if(button != null)
-            return listaButtoni.indexOf(button);
+        for(int i=0; i<listaButtoni.size(); i++){
+            if(listaButtoni.get(i).isSelected())
+                return i;
+        }
         return -1;
     }
 }
