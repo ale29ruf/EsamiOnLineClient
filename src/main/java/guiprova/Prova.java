@@ -7,11 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 public class Prova {
+
+    static HandlerTimeout gestoreQuery;
+
     public static void main(String[] args){
 
         JFrame f = new JFrame("Applicazione client-server");
@@ -49,98 +54,67 @@ public class Prova {
         pannello.repaint();
 
 
-        java.util.List<JPanelQuery> pannelliMostrati = new LinkedList<>(); //mantiene i riferimento ai pannelli del cardlayout in modo da ottenere la risposta selezionata dal relativo JPanelQuery
+        java.util.Queue<JPanelQuery> codaJPanelQueryDaMostrare = new LinkedList<>(); //mantiene i riferimento ai pannelli del cardlayout in modo da ottenere la risposta selezionata dal relativo JPanelQuery
 
         java.util.List<Remotemethod.Domanda> domande = ottieniDomande();
         for(Remotemethod.Domanda d : domande){
             JPanelQuery jPanelQuery = new JPanelQuery(d);
-            pannelliMostrati.add(jPanelQuery);
+            codaJPanelQueryDaMostrare.add(jPanelQuery);
         }
 
-        JPanel pannelloQuery = new JPanel();
-        pannelloQuery.add(pannelliMostrati.get(0),BorderLayout.CENTER);
-        pannelloQuery.revalidate();
-        pannelloQuery.repaint();
-
-        ListIterator<JPanelQuery> jPanelQueryIterator = pannelliMostrati.listIterator();
-        java.util.List<Integer> listaRisposte = new LinkedList<>();
-
-        JProgressBar progressBar = new JProgressBar(0, 100);
-        progressBar.setStringPainted(true);
-        progressBar.setValue(0);
+        PannelloQuery pannelloQuery = new PannelloQuery(); //cambiato ogni volta per mostrare il pannello contenente la query corretta
 
 
-        Timer timer = creaTimer(progressBar,pannelloQuery,jPanelQueryIterator);
-        timer.start();
+        JPanelQuery primoPannello = codaJPanelQueryDaMostrare.peek();
+        pannelloQuery.setPannello(primoPannello);
+        primoPannello.avvia();
 
-
-        ActionListener azioneJButton = e -> {
-
-            JPanelQuery jPanelQuery = (JPanelQuery) pannelloQuery.getComponent(0);
-            listaRisposte.add(jPanelQuery.getOpzione());
-
-            pannelloQuery.removeAll();
-
-            if(jPanelQueryIterator.hasNext()){
-                pannelloQuery.add(jPanelQueryIterator.next(),BorderLayout.CENTER);
-                pannelloQuery.revalidate();
-                pannelloQuery.repaint();
-                timer.stop();
-                creaTimer(progressBar,pannelloQuery,jPanelQueryIterator);
-            }
-
-        };
+        java.util.List<Integer> listaRisposte = new LinkedList<>(); //raccoglie le risposte di ogni domanda mostrata
 
         JButton conferma = new JButton("Conferma");
-        conferma.addActionListener(azioneJButton);
+        JButton concludiTest = new JButton("Concludi Test");
+        concludiTest.setVisible(false);
+
+        gestoreQuery = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
+        gestoreQuery.start();
+
+        ActionListener azioneDiConferma = e -> {
+            gestoreQuery.interrupt();
+            changeQuery(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
+            gestoreQuery = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
+            gestoreQuery.start();
+        };
+
+        conferma.addActionListener(azioneDiConferma);
 
         pannello.add(pannelloQuery, BorderLayout.CENTER);
 
+        pannello.add(concludiTest, BorderLayout.EAST);
         pannello.add(conferma, BorderLayout.EAST);
-        pannello.add(progressBar, BorderLayout.SOUTH);
+
 
 
     }
 
-    public static Timer creaTimer(JProgressBar progressBar,JPanel pannelloQuery,ListIterator<JPanelQuery> jPanelQueryIterator){
-        return new Timer(1000, new ActionListener() {
-            int time = 0;
-            int timeProg = 0;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                time++; // Incrementa il tempo
-
-                // Aggiorna la JProgressBar con il nuovo valore
-                if(time%3 == 2){
-                    timeProg++;
-                    progressBar.setValue(timeProg);
-                }
-
-                // Ferma il timer quando il tempo raggiunge 300 secondi (5 minuti)
-                if (time == 300) {
-                    progressBar.setValue(0);
-
-                    pannelloQuery.removeAll();
-
-                    if(jPanelQueryIterator.hasNext()){
-                        pannelloQuery.add(jPanelQueryIterator.next(),BorderLayout.CENTER);
-                        pannelloQuery.revalidate();
-                        pannelloQuery.repaint();
-                        ((Timer) e.getSource()).restart();
-                    }
-
-
-                }
-            }
-        });
+    public static void changeQuery(java.util.Queue<JPanelQuery> codaJPanelQueryDaMostrare,java.util.List<Integer> listaRisposte,PannelloQuery pannelloQuery,
+                             JButton conferma,JButton concludiTest){
+        JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
+        listaRisposte.add((jPanelQuery.getOpzione()));
+        pannelloQuery.removePannello();
+        if(codaJPanelQueryDaMostrare.isEmpty()){
+            System.out.println(listaRisposte);
+            conferma.setVisible(false);
+            concludiTest.setVisible(true);
+        } else {
+            pannelloQuery.setPannello(codaJPanelQueryDaMostrare.peek());
+        }
     }
 
     private static java.util.List<Remotemethod.Domanda> ottieniDomande() {
-        Remotemethod.Domanda domanda1 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 1?").setScelte(ottieniScelte()).build();
-        Remotemethod.Domanda domanda2 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 2?").setScelte(ottieniScelte()).build();
-        Remotemethod.Domanda domanda3 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 3?").setScelte(ottieniScelte()).build();
-        Remotemethod.Domanda domanda4 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 4?").setScelte(ottieniScelte()).build();
+        Remotemethod.Domanda domanda1 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 1 ?").setScelte(ottieniScelte()).build();
+        Remotemethod.Domanda domanda2 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 2 ?").setScelte(ottieniScelte()).build();
+        Remotemethod.Domanda domanda3 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 3 ?").setScelte(ottieniScelte()).build();
+        Remotemethod.Domanda domanda4 = Remotemethod.Domanda.newBuilder().setTesto("Capitale d'Italia 4 ?").setScelte(ottieniScelte()).build();
         java.util.List<Remotemethod.Domanda> lista = new LinkedList<>();
         lista.add(domanda1);
         lista.add(domanda2);
@@ -163,3 +137,42 @@ public class Prova {
         return result;
     }
 }
+
+class HandlerTimeout extends Thread{
+
+    Queue<JPanelQuery> codaJPanelQueryDaMostrare; List<Integer> listaRisposte; PannelloQuery pannelloQuery; JButton conferma; JButton concludiTest;
+    public HandlerTimeout(Queue<JPanelQuery> codaJPanelQueryDaMostrare, List<Integer> listaRisposte, PannelloQuery pannelloQuery, JButton conferma, JButton concludiTest) {
+        this.codaJPanelQueryDaMostrare = codaJPanelQueryDaMostrare;
+        this.listaRisposte = listaRisposte;
+        this.pannelloQuery = pannelloQuery;
+        this.conferma = conferma;
+        this.concludiTest = concludiTest;
+    }
+
+    public void run(){
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            System.out.println();
+        }
+        JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
+        listaRisposte.add((jPanelQuery.getOpzione()));
+        pannelloQuery.removePannello();
+        if(codaJPanelQueryDaMostrare.isEmpty()){
+            System.out.println(listaRisposte);
+            conferma.setVisible(false);
+            concludiTest.setVisible(true);
+        } else {
+            pannelloQuery.setPannello(codaJPanelQueryDaMostrare.peek());
+
+            Runnable cambiaHandlerTimeout = () -> {
+                Prova.gestoreQuery = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
+                Prova.gestoreQuery.start();
+            };
+            Thread thread = new Thread(cambiaHandlerTimeout);
+            thread.start();
+
+        }
+    }
+}
+
