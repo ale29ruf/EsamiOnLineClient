@@ -95,10 +95,8 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
             return;
 
 
-        disabilitaPulsanti();
-        pannello.removeAll();
-        pannello.revalidate();
-        pannello.repaint();
+        //disabilitaPulsanti();
+
         Model m = new ListaDomandeProtoAdapter(this);
         RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
         esecutore.execute(task);

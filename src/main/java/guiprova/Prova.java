@@ -48,6 +48,7 @@ public class Prova {
 
         f.pack();
 
+        //----------------------------------------------
         visualizzaAppelliButton.setEnabled(false);
         prenotaButton.setEnabled(false);
         partecipaAppelliButton.setEnabled(false);
@@ -158,6 +159,7 @@ public class Prova {
 class HandlerTimeout extends Thread{
 
     boolean stop = false;
+    boolean ritarda = false;
     int time;
     Queue<JPanelQuery> codaJPanelQueryDaMostrare; List<Integer> listaRisposte; PannelloQuery pannelloQuery; JButton conferma; JButton concludiTest;
     public HandlerTimeout(java.util.Queue<JPanelQuery> codaJPanelQueryDaMostrare, List<Integer> listaRisposte, PannelloQuery pannelloQuery, JButton conferma, JButton concludiTest, int time) {
@@ -179,15 +181,19 @@ class HandlerTimeout extends Thread{
             System.out.println("Non faccio nulla dato che sono interrotto");
             return;
         }
-        try {
-            TimeUnit.SECONDS.sleep(Prova.ritardo);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+
+        if(ritarda){
+            try {
+                TimeUnit.SECONDS.sleep(Prova.ritardo);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if(stop) {
+                System.out.println("Non faccio nulla dato che sono interrotto");
+                return;
+            }
         }
-        if(stop) {
-            System.out.println("Non faccio nulla dato che sono interrotto");
-            return;
-        }
+
         Prova.changeQuery(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
     }
 
@@ -200,6 +206,7 @@ class HandlerTimeout extends Thread{
     }
 
     public void ritarda() {
+        ritarda=true;
         interrupt();
     }
 }
