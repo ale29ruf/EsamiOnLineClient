@@ -1,17 +1,16 @@
 package mediator;
 
-import commands.InviaRisposte;
 import commands.RecivitoreListaDomande;
+import guicomponent.JDialogModul;
 import guicomponent.JSenderButton;
+import proto.Remotemethod;
 import protoadapter.*;
 import strategyvisualizer.Strategy;
 
 import javax.swing.*;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -93,12 +92,17 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
 
     public void rispostaPartecipazione(InfoProtoAdapter infoProtoAdapter) {
         String risposta = infoProtoAdapter.getTesto();
-        System.out.println(risposta);
-        comunicaLogger(risposta);
-        if(risposta.contains("ERRORE"))
-            return;
 
-        disabilitaPulsanti();
+        if(risposta.contains("ERRORE")){
+            comunicaLogger(risposta);
+            return;
+        }
+
+        //Sarà sicuramente l'id dell'appello
+        idAppello = Integer.parseInt(risposta);
+        comunicaLogger("Attendere inizio appello");
+
+        setPulsanti(false);
         Model m = new ListaDomandeProtoAdapter(this);
         RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
         esecutore.execute(task);
@@ -107,10 +111,10 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         //comunicare nulla al server ma aspetta di essere contattato da questo
     }
 
-    private void disabilitaPulsanti() {
-        caricaAppelli.setEnabled(false);
-        prenotaButton.setEnabled(false);
-        partecipaButton.setEnabled(false);
+    private void setPulsanti(boolean set) {
+        caricaAppelli.setEnabled(set);
+        prenotaButton.setEnabled(set);
+        partecipaButton.setEnabled(set);
     }
 
     public void domandeRicevute(ListaDomandeProtoAdapter domande){
@@ -122,7 +126,17 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
             comunicaRisposte(risposte); //anche in questo caso, il jSenderButton (collega), conosce solo il mediatore concreto cosi' come tutti gli altri in modo da effettuare l'invio per mezzo dello stub
         });
 
-        comunicaLogger("Risposte inviate");
+
+    }
+
+    public void moduloRicevuto(ModuloProtoAdapter modulo){
+        System.out.println("Esecuzione del metodo moduloRicevuto da parte di "+Thread.currentThread());
+        setPulsanti(true);
+        JFrame f = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, pannello);
+        System.out.println(modulo.getPunteggio());
+
+        JDialogModul jDialogModul = new JDialogModul(f,modulo);
+        comunicaLogger("Risposte esatte e punteggio ottenuto mostrato");
     }
 
 
@@ -136,6 +150,8 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
     public void comunicaPartecipazioneInCorso(){ comunicaLogger("Partecipazione appello richiesto in corso ...");}
+
+    public void comunicaPunteggioInCorso(){ comunicaLogger("Inoltro domande in corso ...");}
 
     private void comunicaLogger(String comunicazione){
         try{

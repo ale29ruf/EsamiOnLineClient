@@ -2,6 +2,7 @@ import protoadapter.AppelliProtoAdapter;
 import protoadapter.CollegueViewFactory;
 import mediator.Controller;
 import protoadapter.ListaDomandeProtoAdapter;
+import protoadapter.ModuloProtoAdapter;
 import strategyvisualizer.ListaAppelliView;
 import strategyvisualizer.ListaDomandeView;
 

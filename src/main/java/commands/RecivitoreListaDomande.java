@@ -7,6 +7,7 @@ import protoadapter.Model;
 import support.ReciverImpl;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class RecivitoreListaDomande extends Thread {
     Model m;
@@ -22,7 +23,7 @@ public class RecivitoreListaDomande extends Thread {
         try {
             server.start();
             System.out.println("Client started at " + server.getPort());
-            server.awaitTermination();
+            server.awaitTermination(5, TimeUnit.SECONDS); //il thread sta in ascolto per 5 secondi e poi termina
         } catch (IOException | InterruptedException e) {
             server.shutdown();
         }

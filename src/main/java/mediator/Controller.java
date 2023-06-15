@@ -72,9 +72,11 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
 
     @Override
     public void comunicaRisposte(List<Integer> lista){
+        comunicaPunteggioInCorso();
         Model m = new ModuloProtoAdapter(this);
-        InviaRisposte task = new InviaRisposte(m,stub,lista);
+        InviaRisposte task = new InviaRisposte(m,stub,lista,super.idAppello);
         esecutore.execute(task);
+        System.out.println("Thread InviaRisposte lanciato");
     }
 
 
