@@ -4,12 +4,9 @@ import proto.Remotemethod;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class JPanelQuery extends JPanel {
     private JLabel testoDomanda;

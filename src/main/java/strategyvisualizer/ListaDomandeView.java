@@ -1,8 +1,11 @@
 package strategyvisualizer;
 
 import guicomponent.JPanelQuery;
+import guicomponent.JSenderButton;
 import guiprova.PannelloQuery;
 import guiprova.Prova;
+import mediator.AbstractMediator;
+import mediator.Mediatore;
 import proto.Remotemethod;
 import protoadapter.ListaDomandeProtoAdapter;
 import protoadapter.Model;
@@ -13,19 +16,23 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ListaDomandeView implements Strategy{
 
-    static int nDomande;
-    static int timeInMilliSecond = 10;
-    static int pass = 0;
+    static int timeInSecond = 10; //tempo massimo a disposizione per ogni domanda
+    static Lock lock = new ReentrantLock();
+
+    int nDomande;
+    int pass; //indice della domanda attualmente mostrata
 
 
     @Override
-    public JButton proietta(Model source, JComponent destination) {
+    public JSenderButton proietta(Model source, JComponent destination) {
 
-        JToolBar barraControllo = (JToolBar) destination;
-        JPanel pannello = (JPanel) SwingUtilities.getAncestorOfClass(JPanel.class, barraControllo);
+        JPanel pannello = (JPanel) destination;
 
         pannello.removeAll();
         pannello.revalidate();
@@ -47,34 +54,38 @@ public class ListaDomandeView implements Strategy{
         pannelloQuery.setPannello(primoPannello);
         primoPannello.avvia();
 
-        List<Integer> listaRisposte = new LinkedList<>(); //raccoglie le risposte di ogni domanda mostrata
-
         JButton conferma = new JButton("Conferma");
-        JButton concludiTest = new JButton("Concludi Test");
+        JSenderButton concludiTest = new JSenderButton("Concludi Test"); //raccoglie le risposte di ogni domanda mostrata
         concludiTest.setVisible(false);
 
         LinkedList<HandlerTimeout> timeouts = new LinkedList<>();
         for(int i=0; i<nDomande; i++){
-            HandlerTimeout timeout = new HandlerTimeout(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest,timeInMilliSecond*i + timeInMilliSecond);
+            HandlerTimeout timeout = new HandlerTimeout(codaJPanelQueryDaMostrare,pannelloQuery,conferma,concludiTest, timeInSecond *i + timeInSecond);
             timeouts.add(timeout);
             timeout.start();
         }
 
 
         ActionListener azioneDiConferma = e -> {
-            while(timeouts.get(pass).eInterrotto()){
+            try{
+                lock.lock();
+                while(timeouts.get(pass).eInterrotto()){
+                    pass++;
+                }
+
+                timeouts.get(pass).interrompi();
                 pass++;
-            }
-            System.out.println("All'interno dell'ActionListener");
-            timeouts.get(pass).interrompi();
-            pass++;
 
-            if(pass < timeouts.size()){
-                HandlerTimeout timeoutSuccessivo = timeouts.get(pass);
-                timeoutSuccessivo.ritarda();
+                if(pass < timeouts.size()){
+                    HandlerTimeout timeoutSuccessivo = timeouts.get(pass);
+                    timeoutSuccessivo.ritarda();
+                }
+
+                changeQuery(codaJPanelQueryDaMostrare,pannelloQuery,conferma,concludiTest);
+            } finally {
+                lock.unlock();
             }
 
-            changeQuery(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
         };
 
         conferma.addActionListener(azioneDiConferma);
@@ -87,32 +98,37 @@ public class ListaDomandeView implements Strategy{
         return concludiTest;
     }
 
-    public static void changeQuery(java.util.Queue<JPanelQuery> codaJPanelQueryDaMostrare,java.util.List<Integer> listaRisposte,PannelloQuery pannelloQuery,
-                                   JButton conferma,JButton concludiTest){
-        JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
-        listaRisposte.add((jPanelQuery.getOpzione()));
-        pannelloQuery.removePannello();
-        if(codaJPanelQueryDaMostrare.isEmpty()){
-            System.out.println(listaRisposte);
-            conferma.setVisible(false);
-            concludiTest.setVisible(true);
-        } else {
-            pannelloQuery.setPannello(codaJPanelQueryDaMostrare.peek());
+    public static void changeQuery(Queue<JPanelQuery> codaJPanelQueryDaMostrare,PannelloQuery pannelloQuery,
+                                   JButton conferma,JSenderButton concludiTest){
+        try{
+            lock.lock();
+            JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
+            int scelta = jPanelQuery.getOpzione();
+            concludiTest.addRisposta(scelta);
+            pannelloQuery.removePannello();
+            if(codaJPanelQueryDaMostrare.isEmpty()){
+                conferma.setVisible(false);
+                concludiTest.setVisible(true);
+            } else {
+                pannelloQuery.setPannello(codaJPanelQueryDaMostrare.peek());
+            }
+        } finally {
+            lock.unlock();
         }
+
     }
 
 }
 
 class HandlerTimeout extends Thread{
 
-    boolean stop = false;
-    boolean ritarda = false;
+    AtomicBoolean stop = new AtomicBoolean(false);
+    AtomicBoolean ritarda = new AtomicBoolean(false);
     int time;
-    Queue<JPanelQuery> codaJPanelQueryDaMostrare; List<Integer> listaRisposte; PannelloQuery pannelloQuery; JButton conferma; JButton concludiTest;
-    public HandlerTimeout(java.util.Queue<JPanelQuery> codaJPanelQueryDaMostrare, List<Integer> listaRisposte, PannelloQuery pannelloQuery, JButton conferma, JButton concludiTest, int time) {
+    Queue<JPanelQuery> codaJPanelQueryDaMostrare; PannelloQuery pannelloQuery; JButton conferma; JSenderButton concludiTest;
+    public HandlerTimeout(Queue<JPanelQuery> codaJPanelQueryDaMostrare, PannelloQuery pannelloQuery, JButton conferma, JSenderButton concludiTest, int time) {
         this.time = time;
         this.codaJPanelQueryDaMostrare = codaJPanelQueryDaMostrare;
-        this.listaRisposte = listaRisposte;
         this.pannelloQuery = pannelloQuery;
         this.conferma = conferma;
         this.concludiTest = concludiTest;
@@ -124,40 +140,40 @@ class HandlerTimeout extends Thread{
         } catch (InterruptedException e) {
             System.out.println("Catch dell'InterruptedException");
         }
-        if(stop) {
+        if(stop.get()) {
             System.out.println("Non faccio nulla dato che sono interrotto");
             return;
         }
 
-        if(ritarda){
+        if(ritarda.get()){
             try {
-                TimeUnit.SECONDS.sleep(ListaDomandeView.timeInMilliSecond);
+                TimeUnit.SECONDS.sleep(ListaDomandeView.timeInSecond);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if(stop) {
+            if(stop.get()) {
                 System.out.println("Non faccio nulla dato che sono interrotto");
                 return;
             }
         }
 
-        if(stop) {
+        if(stop.get()) {
             System.out.println("Non faccio nulla dato che sono interrotto");
             return;
         }
-        Prova.changeQuery(codaJPanelQueryDaMostrare,listaRisposte,pannelloQuery,conferma,concludiTest);
+        ListaDomandeView.changeQuery(codaJPanelQueryDaMostrare,pannelloQuery,conferma,concludiTest);
     }
 
     public void interrompi() {
-        stop=true;
+        stop.set(true);
     }
 
     public boolean eInterrotto(){
-        return stop;
+        return stop.get();
     }
 
     public void ritarda() {
-        ritarda = true;
+        ritarda.set(true);
         interrupt();
     }
 }

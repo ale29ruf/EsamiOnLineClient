@@ -2,18 +2,17 @@ package mediator;
 
 import commands.CaricaAppelli;
 import commands.InviaRegistrazioneStudente;
+import commands.InviaRisposte;
 import commands.RichiestaPartecipazioneAppello;
 import guicomponent.JDialogCod;
-import protoadapter.InfoProtoAdapter;
-import protoadapter.Model;
+import protoadapter.*;
 import guicomponent.JDialogLog;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import proto.SenderGrpc;
-import protoadapter.AppelliProtoAdapter;
-import protoadapter.CodiceAppelloAdapter;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -69,6 +68,13 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
             esecutore.execute(task);
         }
 
+    }
+
+    @Override
+    public void comunicaRisposte(List<Integer> lista){
+        Model m = new ModuloProtoAdapter(this);
+        InviaRisposte task = new InviaRisposte(m,stub,lista);
+        esecutore.execute(task);
     }
 
 

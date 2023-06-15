@@ -1,10 +1,14 @@
 package mediator;
 
+import commands.InviaRisposte;
 import commands.RecivitoreListaDomande;
+import guicomponent.JSenderButton;
 import protoadapter.*;
 import strategyvisualizer.Strategy;
 
 import javax.swing.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -94,19 +98,13 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         if(risposta.contains("ERRORE"))
             return;
 
-
-        //disabilitaPulsanti();
-
+        disabilitaPulsanti();
         Model m = new ListaDomandeProtoAdapter(this);
         RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
         esecutore.execute(task);
 
-    }
-
-    public void domandeRicevute(ListaDomandeProtoAdapter domande){
-        Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaDomandeProtoAdapter.class);
-        JButton riceviModulo = (JButton) visualizer.proietta(domande,barraControllo);
-
+        //il task viene creato ed eseguito in questa classe e non in Controller perchè di fatto non deve
+        //comunicare nulla al server ma aspetta di essere contattato da questo
     }
 
     private void disabilitaPulsanti() {
@@ -114,6 +112,20 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         prenotaButton.setEnabled(false);
         partecipaButton.setEnabled(false);
     }
+
+    public void domandeRicevute(ListaDomandeProtoAdapter domande){
+        Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaDomandeProtoAdapter.class);
+        JSenderButton jSenderButton = (JSenderButton) visualizer.proietta(domande,pannello);
+        jSenderButton.addActionListener(e -> {
+            jSenderButton.setVisible(false);
+            List<Integer> risposte = jSenderButton.getListaRisposte();
+            comunicaRisposte(risposte); //anche in questo caso, il jSenderButton (collega), conosce solo il mediatore concreto cosi' come tutti gli altri in modo da effettuare l'invio per mezzo dello stub
+        });
+
+        comunicaLogger("Risposte inviate");
+    }
+
+
 
     public void comunicaCaricamentoAppello(){
         comunicaLogger("Caricamento appelli in corso ...");

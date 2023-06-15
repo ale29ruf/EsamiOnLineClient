@@ -2,6 +2,7 @@ package mediator;
 
 
 import javax.swing.*;
+import java.util.List;
 
 public interface Mediatore {
 
@@ -11,5 +12,6 @@ public interface Mediatore {
 
     void partecipaAppello(JButton widget);
 
+    void comunicaRisposte(List<Integer> risposte);
 
 }

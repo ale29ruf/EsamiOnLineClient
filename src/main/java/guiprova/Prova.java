@@ -106,7 +106,7 @@ public class Prova {
         pannello.add(concludiTest, BorderLayout.EAST);
         pannello.add(conferma, BorderLayout.EAST);
 
-
+        System.out.println("Sto per restituire");
 
     }
 
