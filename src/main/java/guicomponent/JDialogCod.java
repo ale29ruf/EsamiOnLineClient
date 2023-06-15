@@ -17,9 +17,9 @@ public class JDialogCod extends JDialog {
         pannelloOut.add(pannelloIn, BorderLayout.CENTER);
         pannelloOut.add(pannelloButton, BorderLayout.SOUTH);
 
-        super.setContentPane(pannelloOut);
-        super.setSize(300, 150);
-        super.setLocationRelativeTo(f);
+        setContentPane(pannelloOut);
+        setSize(300, 150);
+        setLocationRelativeTo(f);
     }
 
     private JPanel creaBottonPanel() {

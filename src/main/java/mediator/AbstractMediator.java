@@ -118,6 +118,7 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
     public void domandeRicevute(ListaDomandeProtoAdapter domande){
+        comunicaLogger("Appello iniziato");
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaDomandeProtoAdapter.class);
         JSenderButton jSenderButton = (JSenderButton) visualizer.proietta(domande,pannello);
         jSenderButton.addActionListener(e -> {
@@ -130,13 +131,12 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
     public void moduloRicevuto(ModuloProtoAdapter modulo){
-        System.out.println("Esecuzione del metodo moduloRicevuto da parte di "+Thread.currentThread());
+        comunicaLogger("Risposte esatte e punteggio ottenuto mostrato");
         setPulsanti(true);
         JFrame f = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, pannello);
-        System.out.println(modulo.getPunteggio());
 
         JDialogModul jDialogModul = new JDialogModul(f,modulo);
-        comunicaLogger("Risposte esatte e punteggio ottenuto mostrato");
+        jDialogModul.setVisible(true);
     }
 
 

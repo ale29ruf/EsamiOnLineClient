@@ -25,9 +25,7 @@ public class InviaRisposte extends Thread{
     }
 
     public void run(){
-        System.out.println("Sto per inviare le risposte");
         Remotemethod.Modulo modulo = stub.inviaRisposte(response);
-        System.out.println("Modulo ricevuto");
         m.setRemoteInfo(modulo);
     }
 }

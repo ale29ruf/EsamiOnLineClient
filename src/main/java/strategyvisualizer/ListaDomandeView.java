@@ -31,6 +31,8 @@ public class ListaDomandeView implements Strategy{
 
     @Override
     public JSenderButton proietta(Model source, JComponent destination) {
+        nDomande = 0;
+        pass = 0;
 
         JPanel pannello = (JPanel) destination;
 

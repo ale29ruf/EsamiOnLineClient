@@ -12,17 +12,15 @@ import java.util.List;
 public class JDialogModul extends JDialog {
 
     public JDialogModul(JFrame f, ModuloProtoAdapter modulo){
-
-        JDialog finestraPunteggio = new JDialog(f, "Finestra punteggio", true);
-        finestraPunteggio.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        super(f, "Finestra punteggio", true);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JLabel risposteEtichetta = new JLabel("Risposte esatte: ");
 
         List<Remotemethod.Risposta> listaRisposta = modulo.getListaRisposte().getRisposteList();
         DefaultListModel<String> risposte = new DefaultListModel<>();
         for(int i=0; i<listaRisposta.size(); i++){
-            System.out.println(listaRisposta.get(i));
-            risposte.addElement(i+1+"."+listaRisposta.get(i));
+            risposte.addElement(i+1+"."+listaRisposta.get(i).getRisposta());
         }
         JList<String> risposteJList = new JList<>(risposte);
         JScrollPane barraRisposte = new JScrollPane(risposteJList);
@@ -33,7 +31,7 @@ public class JDialogModul extends JDialog {
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                finestraPunteggio.dispose();
+                dispose();
             }
         });
 
@@ -46,9 +44,6 @@ public class JDialogModul extends JDialog {
         setContentPane(pannello);
         setSize(400, 300);
         setLocationRelativeTo(f); //centra la finestra di dialogo rispetto alla finestra principale
-        finestraPunteggio.pack();
-        finestraPunteggio.setLocationRelativeTo(f);
-        finestraPunteggio.setVisible(true);
     }
 
 }
