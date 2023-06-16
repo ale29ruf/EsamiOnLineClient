@@ -76,6 +76,7 @@ message RispostaAppello {
 message Risposta {
   int32 idDomanda = 1;
   int32 idScelta = 2;
+  string testo = 3;
 }
 
 message pRequest {

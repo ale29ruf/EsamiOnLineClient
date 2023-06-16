@@ -44,11 +44,16 @@ public class ListaDomandeView implements Strategy{
         Queue<JPanelQuery> codaJPanelQueryDaMostrare = new LinkedList<>(); //mantiene i riferimento ai pannelli del cardlayout in modo da ottenere la risposta selezionata dal relativo JPanelQuery
 
         List<Remotemethod.Domanda> domande = ((ListaDomandeProtoAdapter) source).getDomandeList();
-        for(Remotemethod.Domanda d : domande){
+        List<Remotemethod.Domanda> domandeOrd = new ArrayList<>(domande);
+        //Ordino le domande in base all'id in modo da restituire le risposte nella classe JDialogModul con lo stesso ordine
+        Comparator<Remotemethod.Domanda> comparator = Comparator.comparingInt(Remotemethod.Domanda::getId);
+        Collections.sort(domandeOrd,comparator);
+
+        for(Remotemethod.Domanda d : domandeOrd){
             JPanelQuery jPanelQuery = new JPanelQuery(d);
             codaJPanelQueryDaMostrare.add(jPanelQuery);
         }
-        nDomande = domande.size();
+        nDomande = domandeOrd.size();
 
         PannelloQuery pannelloQuery = new PannelloQuery(); //cambiato ogni volta per mostrare il pannello contenente la query corretta
 
@@ -96,6 +101,10 @@ public class ListaDomandeView implements Strategy{
 
         pannello.add(concludiTest, BorderLayout.EAST);
         pannello.add(conferma, BorderLayout.EAST);
+
+        //Operazioni necessarie altrimenti occorre ridimensionare leggermente la finestra per vedere gli elementi aggiunti
+        pannello.revalidate();
+        pannello.repaint();
 
         return concludiTest;
     }

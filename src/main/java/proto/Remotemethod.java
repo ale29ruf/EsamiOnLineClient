@@ -7263,6 +7263,16 @@ public final class Remotemethod {
      * <code>int32 idScelta = 2;</code>
      */
     int getIdScelta();
+
+    /**
+     * <code>string testo = 3;</code>
+     */
+    java.lang.String getTesto();
+    /**
+     * <code>string testo = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getTestoBytes();
   }
   /**
    * Protobuf type {@code Risposta}
@@ -7279,6 +7289,7 @@ public final class Remotemethod {
     private Risposta() {
       idDomanda_ = 0;
       idScelta_ = 0;
+      testo_ = "";
     }
 
     @java.lang.Override
@@ -7313,6 +7324,12 @@ public final class Remotemethod {
             case 16: {
 
               idScelta_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              testo_ = s;
               break;
             }
             default: {
@@ -7365,6 +7382,40 @@ public final class Remotemethod {
       return idScelta_;
     }
 
+    public static final int TESTO_FIELD_NUMBER = 3;
+    private volatile java.lang.Object testo_;
+    /**
+     * <code>string testo = 3;</code>
+     */
+    public java.lang.String getTesto() {
+      java.lang.Object ref = testo_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        testo_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string testo = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTestoBytes() {
+      java.lang.Object ref = testo_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        testo_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -7385,6 +7436,9 @@ public final class Remotemethod {
       if (idScelta_ != 0) {
         output.writeInt32(2, idScelta_);
       }
+      if (!getTestoBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, testo_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -7401,6 +7455,9 @@ public final class Remotemethod {
       if (idScelta_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, idScelta_);
+      }
+      if (!getTestoBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, testo_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7422,6 +7479,8 @@ public final class Remotemethod {
           == other.getIdDomanda());
       result = result && (getIdScelta()
           == other.getIdScelta());
+      result = result && getTesto()
+          .equals(other.getTesto());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -7437,6 +7496,8 @@ public final class Remotemethod {
       hash = (53 * hash) + getIdDomanda();
       hash = (37 * hash) + IDSCELTA_FIELD_NUMBER;
       hash = (53 * hash) + getIdScelta();
+      hash = (37 * hash) + TESTO_FIELD_NUMBER;
+      hash = (53 * hash) + getTesto().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7574,6 +7635,8 @@ public final class Remotemethod {
 
         idScelta_ = 0;
 
+        testo_ = "";
+
         return this;
       }
 
@@ -7602,6 +7665,7 @@ public final class Remotemethod {
         proto.Remotemethod.Risposta result = new proto.Remotemethod.Risposta(this);
         result.idDomanda_ = idDomanda_;
         result.idScelta_ = idScelta_;
+        result.testo_ = testo_;
         onBuilt();
         return result;
       }
@@ -7655,6 +7719,10 @@ public final class Remotemethod {
         }
         if (other.getIdScelta() != 0) {
           setIdScelta(other.getIdScelta());
+        }
+        if (!other.getTesto().isEmpty()) {
+          testo_ = other.testo_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -7733,6 +7801,75 @@ public final class Remotemethod {
       public Builder clearIdScelta() {
         
         idScelta_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object testo_ = "";
+      /**
+       * <code>string testo = 3;</code>
+       */
+      public java.lang.String getTesto() {
+        java.lang.Object ref = testo_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          testo_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string testo = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTestoBytes() {
+        java.lang.Object ref = testo_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          testo_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string testo = 3;</code>
+       */
+      public Builder setTesto(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        testo_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string testo = 3;</code>
+       */
+      public Builder clearTesto() {
+        
+        testo_ = getDefaultInstance().getTesto();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string testo = 3;</code>
+       */
+      public Builder setTestoBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        testo_ = value;
         onChanged();
         return this;
       }
@@ -10203,19 +10340,19 @@ public final class Remotemethod {
       "Scelta\"#\n\006Scelta\022\n\n\002id\030\001 \001(\005\022\r\n\005testo\030\002 " +
       "\001(\t\"K\n\017RispostaAppello\022\021\n\tidAppello\030\001 \001(" +
       "\005\022%\n\rlistaRisposte\030\002 \001(\0132\016.ListaRisposte" +
-      "\"/\n\010Risposta\022\021\n\tidDomanda\030\001 \001(\005\022\020\n\010idSce" +
-      "lta\030\002 \001(\005\"N\n\010pRequest\022!\n\tcodApello\030\001 \001(\013" +
-      "2\016.CodiceAppello\022\021\n\thostaname\030\002 \001(\t\022\014\n\004p" +
-      "ort\030\003 \001(\005\"U\n\006Modulo\022\021\n\tidAppello\030\001 \001(\005\022%" +
-      "\n\rlistaRisposte\030\002 \001(\0132\016.ListaRisposte\022\021\n" +
-      "\tpunteggio\030\003 \001(\005\",\n\rListaRisposte\022\033\n\010ris" +
-      "poste\030\001 \003(\0132\t.Risposta2\336\001\n\006Sender\022\'\n\rCar" +
-      "icaAppelli\022\005.Info\032\r.ListaAppelli\"\000\022/\n\020Re" +
-      "gistraStudente\022\t.Studente\032\016.CodiceAppell" +
-      "o\"\000\022$\n\016PartecipaEsame\022\t.pRequest\032\005.Info\"" +
-      "\000\022&\n\014inviaDomande\022\r.ListaDomande\032\005.Info\"" +
-      "\000\022,\n\rInviaRisposte\022\020.RispostaAppello\032\007.M" +
-      "odulo\"\000B\007\n\005protob\006proto3"
+      "\">\n\010Risposta\022\021\n\tidDomanda\030\001 \001(\005\022\020\n\010idSce" +
+      "lta\030\002 \001(\005\022\r\n\005testo\030\003 \001(\t\"N\n\010pRequest\022!\n\t" +
+      "codApello\030\001 \001(\0132\016.CodiceAppello\022\021\n\thosta" +
+      "name\030\002 \001(\t\022\014\n\004port\030\003 \001(\005\"U\n\006Modulo\022\021\n\tid" +
+      "Appello\030\001 \001(\005\022%\n\rlistaRisposte\030\002 \001(\0132\016.L" +
+      "istaRisposte\022\021\n\tpunteggio\030\003 \001(\005\",\n\rLista" +
+      "Risposte\022\033\n\010risposte\030\001 \003(\0132\t.Risposta2\336\001" +
+      "\n\006Sender\022\'\n\rCaricaAppelli\022\005.Info\032\r.Lista" +
+      "Appelli\"\000\022/\n\020RegistraStudente\022\t.Studente" +
+      "\032\016.CodiceAppello\"\000\022$\n\016PartecipaEsame\022\t.p" +
+      "Request\032\005.Info\"\000\022&\n\014inviaDomande\022\r.Lista" +
+      "Domande\032\005.Info\"\000\022,\n\rInviaRisposte\022\020.Risp" +
+      "ostaAppello\032\007.Modulo\"\000B\007\n\005protob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -10294,7 +10431,7 @@ public final class Remotemethod {
     internal_static_Risposta_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Risposta_descriptor,
-        new java.lang.String[] { "IdDomanda", "IdScelta", });
+        new java.lang.String[] { "IdDomanda", "IdScelta", "Testo", });
     internal_static_pRequest_descriptor =
       getDescriptor().getMessageTypes().get(11);
     internal_static_pRequest_fieldAccessorTable = new

@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class JDialogModul extends JDialog {
@@ -18,9 +21,15 @@ public class JDialogModul extends JDialog {
         JLabel risposteEtichetta = new JLabel("Risposte esatte: ");
 
         List<Remotemethod.Risposta> listaRisposta = modulo.getListaRisposte().getRisposteList();
+
+        //Ordinando le risposte in base all'id delle domande sono sicuro che l'utente le visualizzi correttamente
+        Comparator<Remotemethod.Risposta> comparator = Comparator.comparingInt(Remotemethod.Risposta::getIdDomanda);
+        List<Remotemethod.Risposta> listaRispostaOrd = new ArrayList<>(listaRisposta);
+        Collections.sort(listaRispostaOrd,comparator);
+
         DefaultListModel<String> risposte = new DefaultListModel<>();
-        for(int i=0; i<listaRisposta.size(); i++){
-            //risposte.addElement(i+1+"."+listaRisposta.get(i).getRisposta());
+        for(int i=0; i<listaRispostaOrd.size(); i++){
+            risposte.addElement("Domanda n. "+listaRispostaOrd.get(i).getIdDomanda()+" : "+listaRispostaOrd.get(i).getTesto());
         }
         JList<String> risposteJList = new JList<>(risposte);
         JScrollPane barraRisposte = new JScrollPane(risposteJList);

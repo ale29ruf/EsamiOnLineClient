@@ -35,6 +35,7 @@ public class JPanelQuery extends JPanel {
         }
 
         add(progressBar, BorderLayout.NORTH);
+        setPreferredSize(new Dimension(500,300));
 
     }
 

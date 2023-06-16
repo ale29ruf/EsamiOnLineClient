@@ -5,7 +5,6 @@ import proto.Remotemethod;
 import proto.SenderGrpc;
 import protoadapter.Model;
 
-import java.io.IOException;
 
 public class ReciverImpl extends SenderGrpc.SenderImplBase {
     Model m;
