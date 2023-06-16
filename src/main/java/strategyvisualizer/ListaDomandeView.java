@@ -105,8 +105,8 @@ public class ListaDomandeView implements Strategy{
         try{
             lock.lock();
             JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
-            int scelta = jPanelQuery.getOpzione();
-            concludiTest.addRisposta(scelta);
+            concludiTest.addRisposta(Remotemethod.Risposta.newBuilder().setIdDomanda(jPanelQuery.getIdDomanda()).setIdScelta(jPanelQuery.getOpzione())
+                    .build());
             pannelloQuery.removePannello();
             if(codaJPanelQueryDaMostrare.isEmpty()){
                 conferma.setVisible(false);

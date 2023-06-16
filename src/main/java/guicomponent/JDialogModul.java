@@ -20,7 +20,7 @@ public class JDialogModul extends JDialog {
         List<Remotemethod.Risposta> listaRisposta = modulo.getListaRisposte().getRisposteList();
         DefaultListModel<String> risposte = new DefaultListModel<>();
         for(int i=0; i<listaRisposta.size(); i++){
-            risposte.addElement(i+1+"."+listaRisposta.get(i).getRisposta());
+            //risposte.addElement(i+1+"."+listaRisposta.get(i).getRisposta());
         }
         JList<String> risposteJList = new JList<>(risposte);
         JScrollPane barraRisposte = new JScrollPane(risposteJList);

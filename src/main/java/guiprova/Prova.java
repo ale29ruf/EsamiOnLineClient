@@ -150,8 +150,8 @@ public class Prova {
         lista.add(scelta2);
         lista.add(scelta3);
         lista.add(scelta4);
-        Remotemethod.ListaScelte result = Remotemethod.ListaScelte.newBuilder().addAllScelta(lista).build();
-        return result;
+        //Remotemethod.ListaScelte result = Remotemethod.ListaScelte.newBuilder().addAllScelta(lista).build();
+        return null;//result;
     }
 }
 

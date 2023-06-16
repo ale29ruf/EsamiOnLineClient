@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class JPanelQuery extends JPanel {
     private JLabel testoDomanda;
+    private int idDomanda;
     private List<JCheckBox> listaButtoni;
     JProgressBar progressBar;
     ProgressBarHandler gestoreBarra;
@@ -23,11 +24,12 @@ public class JPanelQuery extends JPanel {
         progressBar.setValue(0);
 
         this.testoDomanda = new JLabel(domanda.getTesto());
+        this.idDomanda = domanda.getId();
         add(testoDomanda, BorderLayout.EAST);
 
         listaButtoni = new LinkedList<>();
-        for(Remotemethod.Info scelta : domanda.getScelte().getSceltaList()) {
-            JCheckBox button = new JCheckBox(scelta.getTesto());
+        for(Remotemethod.Scelta scelta : domanda.getScelte().getScelteList()) {
+            JCheckBoxWithId button = new JCheckBoxWithId(scelta.getTesto(),scelta.getId());
             listaButtoni.add(button);
             add(button);
         }
@@ -44,11 +46,14 @@ public class JPanelQuery extends JPanel {
 
     public int getOpzione() {
         gestoreBarra.interrupt();
-        for(int i=0; i<listaButtoni.size(); i++){
+        for(int i=0; i<listaButtoni.size(); i++)
             if(listaButtoni.get(i).isSelected())
-                return i;
-        }
+                return ((JCheckBoxWithId)(listaButtoni.get(i))).getIdScelta();
         return -1;
+    }
+
+    public int getIdDomanda(){
+        return idDomanda;
     }
 }
 

@@ -54,12 +54,18 @@ message ListaDomande {
 }
 
 message Domanda {
-  string testo = 1;
-  ListaScelte scelte = 2;
+  int32 id = 1;
+  string testo = 2;
+  ListaScelte scelte = 3;
 }
 
 message ListaScelte {
-  repeated Info scelta = 1;
+  repeated Scelta scelte = 1;
+}
+
+message Scelta {
+  int32 id = 1;
+  string testo = 2;
 }
 
 message RispostaAppello {
@@ -68,7 +74,8 @@ message RispostaAppello {
 }
 
 message Risposta {
-  int32 risposta = 1;
+  int32 idDomanda = 1;
+  int32 idScelta = 2;
 }
 
 message pRequest {

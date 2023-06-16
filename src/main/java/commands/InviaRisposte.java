@@ -13,14 +13,10 @@ public class InviaRisposte extends Thread{
     SenderGrpc.SenderBlockingStub stub;
     Remotemethod.RispostaAppello response;
 
-    public InviaRisposte(Model m, SenderGrpc.SenderBlockingStub stub, List<Integer> risposte, int idAppello) {
+    public InviaRisposte(Model m, SenderGrpc.SenderBlockingStub stub, List<Remotemethod.Risposta> risposte, int idAppello) {
         this.m = m;
         this.stub = stub;
-        List<Remotemethod.Risposta> rispostaList = new LinkedList<>();
-        for(int e : risposte){
-            rispostaList.add(Remotemethod.Risposta.newBuilder().setRisposta(e).build());
-        }
-        Remotemethod.ListaRisposte listaRisposte = Remotemethod.ListaRisposte.newBuilder().addAllRisposte(rispostaList).build();
+        Remotemethod.ListaRisposte listaRisposte = Remotemethod.ListaRisposte.newBuilder().addAllRisposte(risposte).build();
         response = Remotemethod.RispostaAppello.newBuilder().setIdAppello(idAppello).setListaRisposte(listaRisposte).build();
     }
 

@@ -5,6 +5,7 @@ import commands.InviaRegistrazioneStudente;
 import commands.InviaRisposte;
 import commands.RichiestaPartecipazioneAppello;
 import guicomponent.JDialogCod;
+import proto.Remotemethod;
 import protoadapter.*;
 import guicomponent.JDialogLog;
 import io.grpc.ManagedChannel;
@@ -71,12 +72,11 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
     }
 
     @Override
-    public void comunicaRisposte(List<Integer> lista){
+    public void comunicaRisposte(List<Remotemethod.Risposta> lista){
         comunicaPunteggioInCorso();
         Model m = new ModuloProtoAdapter(this);
         InviaRisposte task = new InviaRisposte(m,stub,lista,super.idAppello);
         esecutore.execute(task);
-        System.out.println("Thread InviaRisposte lanciato");
     }
 
 

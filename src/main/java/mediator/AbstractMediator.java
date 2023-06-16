@@ -123,7 +123,7 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         JSenderButton jSenderButton = (JSenderButton) visualizer.proietta(domande,pannello);
         jSenderButton.addActionListener(e -> {
             jSenderButton.setVisible(false);
-            List<Integer> risposte = jSenderButton.getListaRisposte();
+            List<Remotemethod.Risposta> risposte = jSenderButton.getListaRisposte();
             comunicaRisposte(risposte); //anche in questo caso, il jSenderButton (collega), conosce solo il mediatore concreto cosi' come tutti gli altri in modo da effettuare l'invio per mezzo dello stub
         });
 

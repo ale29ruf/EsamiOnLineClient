@@ -1,6 +1,8 @@
 package mediator;
 
 
+import proto.Remotemethod;
+
 import javax.swing.*;
 import java.util.List;
 
@@ -12,6 +14,6 @@ public interface Mediatore {
 
     void partecipaAppello(JButton widget);
 
-    void comunicaRisposte(List<Integer> risposte);
+    void comunicaRisposte(List<Remotemethod.Risposta> risposte);
 
 }

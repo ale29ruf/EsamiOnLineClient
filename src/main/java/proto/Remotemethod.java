@@ -4383,25 +4383,30 @@ public final class Remotemethod {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string testo = 1;</code>
+     * <code>int32 id = 1;</code>
+     */
+    int getId();
+
+    /**
+     * <code>string testo = 2;</code>
      */
     java.lang.String getTesto();
     /**
-     * <code>string testo = 1;</code>
+     * <code>string testo = 2;</code>
      */
     com.google.protobuf.ByteString
         getTestoBytes();
 
     /**
-     * <code>.ListaScelte scelte = 2;</code>
+     * <code>.ListaScelte scelte = 3;</code>
      */
     boolean hasScelte();
     /**
-     * <code>.ListaScelte scelte = 2;</code>
+     * <code>.ListaScelte scelte = 3;</code>
      */
     proto.Remotemethod.ListaScelte getScelte();
     /**
-     * <code>.ListaScelte scelte = 2;</code>
+     * <code>.ListaScelte scelte = 3;</code>
      */
     proto.Remotemethod.ListaScelteOrBuilder getScelteOrBuilder();
   }
@@ -4418,6 +4423,7 @@ public final class Remotemethod {
       super(builder);
     }
     private Domanda() {
+      id_ = 0;
       testo_ = "";
     }
 
@@ -4445,13 +4451,18 @@ public final class Remotemethod {
             case 0:
               done = true;
               break;
-            case 10: {
+            case 8: {
+
+              id_ = input.readInt32();
+              break;
+            }
+            case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
               testo_ = s;
               break;
             }
-            case 18: {
+            case 26: {
               proto.Remotemethod.ListaScelte.Builder subBuilder = null;
               if (scelte_ != null) {
                 subBuilder = scelte_.toBuilder();
@@ -4496,10 +4507,19 @@ public final class Remotemethod {
               proto.Remotemethod.Domanda.class, proto.Remotemethod.Domanda.Builder.class);
     }
 
-    public static final int TESTO_FIELD_NUMBER = 1;
+    public static final int ID_FIELD_NUMBER = 1;
+    private int id_;
+    /**
+     * <code>int32 id = 1;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
+    public static final int TESTO_FIELD_NUMBER = 2;
     private volatile java.lang.Object testo_;
     /**
-     * <code>string testo = 1;</code>
+     * <code>string testo = 2;</code>
      */
     public java.lang.String getTesto() {
       java.lang.Object ref = testo_;
@@ -4514,7 +4534,7 @@ public final class Remotemethod {
       }
     }
     /**
-     * <code>string testo = 1;</code>
+     * <code>string testo = 2;</code>
      */
     public com.google.protobuf.ByteString
         getTestoBytes() {
@@ -4530,22 +4550,22 @@ public final class Remotemethod {
       }
     }
 
-    public static final int SCELTE_FIELD_NUMBER = 2;
+    public static final int SCELTE_FIELD_NUMBER = 3;
     private proto.Remotemethod.ListaScelte scelte_;
     /**
-     * <code>.ListaScelte scelte = 2;</code>
+     * <code>.ListaScelte scelte = 3;</code>
      */
     public boolean hasScelte() {
       return scelte_ != null;
     }
     /**
-     * <code>.ListaScelte scelte = 2;</code>
+     * <code>.ListaScelte scelte = 3;</code>
      */
     public proto.Remotemethod.ListaScelte getScelte() {
       return scelte_ == null ? proto.Remotemethod.ListaScelte.getDefaultInstance() : scelte_;
     }
     /**
-     * <code>.ListaScelte scelte = 2;</code>
+     * <code>.ListaScelte scelte = 3;</code>
      */
     public proto.Remotemethod.ListaScelteOrBuilder getScelteOrBuilder() {
       return getScelte();
@@ -4565,11 +4585,14 @@ public final class Remotemethod {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (id_ != 0) {
+        output.writeInt32(1, id_);
+      }
       if (!getTestoBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, testo_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, testo_);
       }
       if (scelte_ != null) {
-        output.writeMessage(2, getScelte());
+        output.writeMessage(3, getScelte());
       }
       unknownFields.writeTo(output);
     }
@@ -4580,12 +4603,16 @@ public final class Remotemethod {
       if (size != -1) return size;
 
       size = 0;
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, id_);
+      }
       if (!getTestoBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, testo_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, testo_);
       }
       if (scelte_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getScelte());
+          .computeMessageSize(3, getScelte());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4603,6 +4630,8 @@ public final class Remotemethod {
       proto.Remotemethod.Domanda other = (proto.Remotemethod.Domanda) obj;
 
       boolean result = true;
+      result = result && (getId()
+          == other.getId());
       result = result && getTesto()
           .equals(other.getTesto());
       result = result && (hasScelte() == other.hasScelte());
@@ -4621,6 +4650,8 @@ public final class Remotemethod {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
       hash = (37 * hash) + TESTO_FIELD_NUMBER;
       hash = (53 * hash) + getTesto().hashCode();
       if (hasScelte()) {
@@ -4760,6 +4791,8 @@ public final class Remotemethod {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        id_ = 0;
+
         testo_ = "";
 
         if (scelteBuilder_ == null) {
@@ -4794,6 +4827,7 @@ public final class Remotemethod {
       @java.lang.Override
       public proto.Remotemethod.Domanda buildPartial() {
         proto.Remotemethod.Domanda result = new proto.Remotemethod.Domanda(this);
+        result.id_ = id_;
         result.testo_ = testo_;
         if (scelteBuilder_ == null) {
           result.scelte_ = scelte_;
@@ -4848,6 +4882,9 @@ public final class Remotemethod {
 
       public Builder mergeFrom(proto.Remotemethod.Domanda other) {
         if (other == proto.Remotemethod.Domanda.getDefaultInstance()) return this;
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
         if (!other.getTesto().isEmpty()) {
           testo_ = other.testo_;
           onChanged();
@@ -4884,9 +4921,35 @@ public final class Remotemethod {
         return this;
       }
 
+      private int id_ ;
+      /**
+       * <code>int32 id = 1;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>int32 id = 1;</code>
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 id = 1;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object testo_ = "";
       /**
-       * <code>string testo = 1;</code>
+       * <code>string testo = 2;</code>
        */
       public java.lang.String getTesto() {
         java.lang.Object ref = testo_;
@@ -4901,7 +4964,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>string testo = 1;</code>
+       * <code>string testo = 2;</code>
        */
       public com.google.protobuf.ByteString
           getTestoBytes() {
@@ -4917,7 +4980,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>string testo = 1;</code>
+       * <code>string testo = 2;</code>
        */
       public Builder setTesto(
           java.lang.String value) {
@@ -4930,7 +4993,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>string testo = 1;</code>
+       * <code>string testo = 2;</code>
        */
       public Builder clearTesto() {
         
@@ -4939,7 +5002,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>string testo = 1;</code>
+       * <code>string testo = 2;</code>
        */
       public Builder setTestoBytes(
           com.google.protobuf.ByteString value) {
@@ -4957,13 +5020,13 @@ public final class Remotemethod {
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.Remotemethod.ListaScelte, proto.Remotemethod.ListaScelte.Builder, proto.Remotemethod.ListaScelteOrBuilder> scelteBuilder_;
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public boolean hasScelte() {
         return scelteBuilder_ != null || scelte_ != null;
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public proto.Remotemethod.ListaScelte getScelte() {
         if (scelteBuilder_ == null) {
@@ -4973,7 +5036,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public Builder setScelte(proto.Remotemethod.ListaScelte value) {
         if (scelteBuilder_ == null) {
@@ -4989,7 +5052,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public Builder setScelte(
           proto.Remotemethod.ListaScelte.Builder builderForValue) {
@@ -5003,7 +5066,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public Builder mergeScelte(proto.Remotemethod.ListaScelte value) {
         if (scelteBuilder_ == null) {
@@ -5021,7 +5084,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public Builder clearScelte() {
         if (scelteBuilder_ == null) {
@@ -5035,7 +5098,7 @@ public final class Remotemethod {
         return this;
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public proto.Remotemethod.ListaScelte.Builder getScelteBuilder() {
         
@@ -5043,7 +5106,7 @@ public final class Remotemethod {
         return getScelteFieldBuilder().getBuilder();
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       public proto.Remotemethod.ListaScelteOrBuilder getScelteOrBuilder() {
         if (scelteBuilder_ != null) {
@@ -5054,7 +5117,7 @@ public final class Remotemethod {
         }
       }
       /**
-       * <code>.ListaScelte scelte = 2;</code>
+       * <code>.ListaScelte scelte = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.Remotemethod.ListaScelte, proto.Remotemethod.ListaScelte.Builder, proto.Remotemethod.ListaScelteOrBuilder> 
@@ -5127,27 +5190,27 @@ public final class Remotemethod {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    java.util.List<proto.Remotemethod.Info> 
-        getSceltaList();
+    java.util.List<proto.Remotemethod.Scelta> 
+        getScelteList();
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    proto.Remotemethod.Info getScelta(int index);
+    proto.Remotemethod.Scelta getScelte(int index);
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    int getSceltaCount();
+    int getScelteCount();
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    java.util.List<? extends proto.Remotemethod.InfoOrBuilder> 
-        getSceltaOrBuilderList();
+    java.util.List<? extends proto.Remotemethod.SceltaOrBuilder> 
+        getScelteOrBuilderList();
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    proto.Remotemethod.InfoOrBuilder getSceltaOrBuilder(
+    proto.Remotemethod.SceltaOrBuilder getScelteOrBuilder(
         int index);
   }
   /**
@@ -5163,7 +5226,7 @@ public final class Remotemethod {
       super(builder);
     }
     private ListaScelte() {
-      scelta_ = java.util.Collections.emptyList();
+      scelte_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -5192,11 +5255,11 @@ public final class Remotemethod {
               break;
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                scelta_ = new java.util.ArrayList<proto.Remotemethod.Info>();
+                scelte_ = new java.util.ArrayList<proto.Remotemethod.Scelta>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              scelta_.add(
-                  input.readMessage(proto.Remotemethod.Info.parser(), extensionRegistry));
+              scelte_.add(
+                  input.readMessage(proto.Remotemethod.Scelta.parser(), extensionRegistry));
               break;
             }
             default: {
@@ -5215,7 +5278,7 @@ public final class Remotemethod {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          scelta_ = java.util.Collections.unmodifiableList(scelta_);
+          scelte_ = java.util.Collections.unmodifiableList(scelte_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5234,39 +5297,39 @@ public final class Remotemethod {
               proto.Remotemethod.ListaScelte.class, proto.Remotemethod.ListaScelte.Builder.class);
     }
 
-    public static final int SCELTA_FIELD_NUMBER = 1;
-    private java.util.List<proto.Remotemethod.Info> scelta_;
+    public static final int SCELTE_FIELD_NUMBER = 1;
+    private java.util.List<proto.Remotemethod.Scelta> scelte_;
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    public java.util.List<proto.Remotemethod.Info> getSceltaList() {
-      return scelta_;
+    public java.util.List<proto.Remotemethod.Scelta> getScelteList() {
+      return scelte_;
     }
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    public java.util.List<? extends proto.Remotemethod.InfoOrBuilder> 
-        getSceltaOrBuilderList() {
-      return scelta_;
+    public java.util.List<? extends proto.Remotemethod.SceltaOrBuilder> 
+        getScelteOrBuilderList() {
+      return scelte_;
     }
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    public int getSceltaCount() {
-      return scelta_.size();
+    public int getScelteCount() {
+      return scelte_.size();
     }
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    public proto.Remotemethod.Info getScelta(int index) {
-      return scelta_.get(index);
+    public proto.Remotemethod.Scelta getScelte(int index) {
+      return scelte_.get(index);
     }
     /**
-     * <code>repeated .Info scelta = 1;</code>
+     * <code>repeated .Scelta scelte = 1;</code>
      */
-    public proto.Remotemethod.InfoOrBuilder getSceltaOrBuilder(
+    public proto.Remotemethod.SceltaOrBuilder getScelteOrBuilder(
         int index) {
-      return scelta_.get(index);
+      return scelte_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -5283,8 +5346,8 @@ public final class Remotemethod {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < scelta_.size(); i++) {
-        output.writeMessage(1, scelta_.get(i));
+      for (int i = 0; i < scelte_.size(); i++) {
+        output.writeMessage(1, scelte_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -5295,9 +5358,9 @@ public final class Remotemethod {
       if (size != -1) return size;
 
       size = 0;
-      for (int i = 0; i < scelta_.size(); i++) {
+      for (int i = 0; i < scelte_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, scelta_.get(i));
+          .computeMessageSize(1, scelte_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5315,8 +5378,8 @@ public final class Remotemethod {
       proto.Remotemethod.ListaScelte other = (proto.Remotemethod.ListaScelte) obj;
 
       boolean result = true;
-      result = result && getSceltaList()
-          .equals(other.getSceltaList());
+      result = result && getScelteList()
+          .equals(other.getScelteList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -5328,9 +5391,9 @@ public final class Remotemethod {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getSceltaCount() > 0) {
-        hash = (37 * hash) + SCELTA_FIELD_NUMBER;
-        hash = (53 * hash) + getSceltaList().hashCode();
+      if (getScelteCount() > 0) {
+        hash = (37 * hash) + SCELTE_FIELD_NUMBER;
+        hash = (53 * hash) + getScelteList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -5460,17 +5523,17 @@ public final class Remotemethod {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getSceltaFieldBuilder();
+          getScelteFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        if (sceltaBuilder_ == null) {
-          scelta_ = java.util.Collections.emptyList();
+        if (scelteBuilder_ == null) {
+          scelte_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          sceltaBuilder_.clear();
+          scelteBuilder_.clear();
         }
         return this;
       }
@@ -5499,14 +5562,14 @@ public final class Remotemethod {
       public proto.Remotemethod.ListaScelte buildPartial() {
         proto.Remotemethod.ListaScelte result = new proto.Remotemethod.ListaScelte(this);
         int from_bitField0_ = bitField0_;
-        if (sceltaBuilder_ == null) {
+        if (scelteBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            scelta_ = java.util.Collections.unmodifiableList(scelta_);
+            scelte_ = java.util.Collections.unmodifiableList(scelte_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
-          result.scelta_ = scelta_;
+          result.scelte_ = scelte_;
         } else {
-          result.scelta_ = sceltaBuilder_.build();
+          result.scelte_ = scelteBuilder_.build();
         }
         onBuilt();
         return result;
@@ -5556,29 +5619,29 @@ public final class Remotemethod {
 
       public Builder mergeFrom(proto.Remotemethod.ListaScelte other) {
         if (other == proto.Remotemethod.ListaScelte.getDefaultInstance()) return this;
-        if (sceltaBuilder_ == null) {
-          if (!other.scelta_.isEmpty()) {
-            if (scelta_.isEmpty()) {
-              scelta_ = other.scelta_;
+        if (scelteBuilder_ == null) {
+          if (!other.scelte_.isEmpty()) {
+            if (scelte_.isEmpty()) {
+              scelte_ = other.scelte_;
               bitField0_ = (bitField0_ & ~0x00000001);
             } else {
-              ensureSceltaIsMutable();
-              scelta_.addAll(other.scelta_);
+              ensureScelteIsMutable();
+              scelte_.addAll(other.scelte_);
             }
             onChanged();
           }
         } else {
-          if (!other.scelta_.isEmpty()) {
-            if (sceltaBuilder_.isEmpty()) {
-              sceltaBuilder_.dispose();
-              sceltaBuilder_ = null;
-              scelta_ = other.scelta_;
+          if (!other.scelte_.isEmpty()) {
+            if (scelteBuilder_.isEmpty()) {
+              scelteBuilder_.dispose();
+              scelteBuilder_ = null;
+              scelte_ = other.scelte_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              sceltaBuilder_ = 
+              scelteBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getSceltaFieldBuilder() : null;
+                   getScelteFieldBuilder() : null;
             } else {
-              sceltaBuilder_.addAllMessages(other.scelta_);
+              scelteBuilder_.addAllMessages(other.scelte_);
             }
           }
         }
@@ -5612,244 +5675,244 @@ public final class Remotemethod {
       }
       private int bitField0_;
 
-      private java.util.List<proto.Remotemethod.Info> scelta_ =
+      private java.util.List<proto.Remotemethod.Scelta> scelte_ =
         java.util.Collections.emptyList();
-      private void ensureSceltaIsMutable() {
+      private void ensureScelteIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          scelta_ = new java.util.ArrayList<proto.Remotemethod.Info>(scelta_);
+          scelte_ = new java.util.ArrayList<proto.Remotemethod.Scelta>(scelte_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.Remotemethod.Info, proto.Remotemethod.Info.Builder, proto.Remotemethod.InfoOrBuilder> sceltaBuilder_;
+          proto.Remotemethod.Scelta, proto.Remotemethod.Scelta.Builder, proto.Remotemethod.SceltaOrBuilder> scelteBuilder_;
 
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public java.util.List<proto.Remotemethod.Info> getSceltaList() {
-        if (sceltaBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(scelta_);
+      public java.util.List<proto.Remotemethod.Scelta> getScelteList() {
+        if (scelteBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(scelte_);
         } else {
-          return sceltaBuilder_.getMessageList();
+          return scelteBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public int getSceltaCount() {
-        if (sceltaBuilder_ == null) {
-          return scelta_.size();
+      public int getScelteCount() {
+        if (scelteBuilder_ == null) {
+          return scelte_.size();
         } else {
-          return sceltaBuilder_.getCount();
+          return scelteBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public proto.Remotemethod.Info getScelta(int index) {
-        if (sceltaBuilder_ == null) {
-          return scelta_.get(index);
+      public proto.Remotemethod.Scelta getScelte(int index) {
+        if (scelteBuilder_ == null) {
+          return scelte_.get(index);
         } else {
-          return sceltaBuilder_.getMessage(index);
+          return scelteBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder setScelta(
-          int index, proto.Remotemethod.Info value) {
-        if (sceltaBuilder_ == null) {
+      public Builder setScelte(
+          int index, proto.Remotemethod.Scelta value) {
+        if (scelteBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureSceltaIsMutable();
-          scelta_.set(index, value);
+          ensureScelteIsMutable();
+          scelte_.set(index, value);
           onChanged();
         } else {
-          sceltaBuilder_.setMessage(index, value);
+          scelteBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder setScelta(
-          int index, proto.Remotemethod.Info.Builder builderForValue) {
-        if (sceltaBuilder_ == null) {
-          ensureSceltaIsMutable();
-          scelta_.set(index, builderForValue.build());
+      public Builder setScelte(
+          int index, proto.Remotemethod.Scelta.Builder builderForValue) {
+        if (scelteBuilder_ == null) {
+          ensureScelteIsMutable();
+          scelte_.set(index, builderForValue.build());
           onChanged();
         } else {
-          sceltaBuilder_.setMessage(index, builderForValue.build());
+          scelteBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder addScelta(proto.Remotemethod.Info value) {
-        if (sceltaBuilder_ == null) {
+      public Builder addScelte(proto.Remotemethod.Scelta value) {
+        if (scelteBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureSceltaIsMutable();
-          scelta_.add(value);
+          ensureScelteIsMutable();
+          scelte_.add(value);
           onChanged();
         } else {
-          sceltaBuilder_.addMessage(value);
+          scelteBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder addScelta(
-          int index, proto.Remotemethod.Info value) {
-        if (sceltaBuilder_ == null) {
+      public Builder addScelte(
+          int index, proto.Remotemethod.Scelta value) {
+        if (scelteBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureSceltaIsMutable();
-          scelta_.add(index, value);
+          ensureScelteIsMutable();
+          scelte_.add(index, value);
           onChanged();
         } else {
-          sceltaBuilder_.addMessage(index, value);
+          scelteBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder addScelta(
-          proto.Remotemethod.Info.Builder builderForValue) {
-        if (sceltaBuilder_ == null) {
-          ensureSceltaIsMutable();
-          scelta_.add(builderForValue.build());
+      public Builder addScelte(
+          proto.Remotemethod.Scelta.Builder builderForValue) {
+        if (scelteBuilder_ == null) {
+          ensureScelteIsMutable();
+          scelte_.add(builderForValue.build());
           onChanged();
         } else {
-          sceltaBuilder_.addMessage(builderForValue.build());
+          scelteBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder addScelta(
-          int index, proto.Remotemethod.Info.Builder builderForValue) {
-        if (sceltaBuilder_ == null) {
-          ensureSceltaIsMutable();
-          scelta_.add(index, builderForValue.build());
+      public Builder addScelte(
+          int index, proto.Remotemethod.Scelta.Builder builderForValue) {
+        if (scelteBuilder_ == null) {
+          ensureScelteIsMutable();
+          scelte_.add(index, builderForValue.build());
           onChanged();
         } else {
-          sceltaBuilder_.addMessage(index, builderForValue.build());
+          scelteBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder addAllScelta(
-          java.lang.Iterable<? extends proto.Remotemethod.Info> values) {
-        if (sceltaBuilder_ == null) {
-          ensureSceltaIsMutable();
+      public Builder addAllScelte(
+          java.lang.Iterable<? extends proto.Remotemethod.Scelta> values) {
+        if (scelteBuilder_ == null) {
+          ensureScelteIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, scelta_);
+              values, scelte_);
           onChanged();
         } else {
-          sceltaBuilder_.addAllMessages(values);
+          scelteBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder clearScelta() {
-        if (sceltaBuilder_ == null) {
-          scelta_ = java.util.Collections.emptyList();
+      public Builder clearScelte() {
+        if (scelteBuilder_ == null) {
+          scelte_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          sceltaBuilder_.clear();
+          scelteBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public Builder removeScelta(int index) {
-        if (sceltaBuilder_ == null) {
-          ensureSceltaIsMutable();
-          scelta_.remove(index);
+      public Builder removeScelte(int index) {
+        if (scelteBuilder_ == null) {
+          ensureScelteIsMutable();
+          scelte_.remove(index);
           onChanged();
         } else {
-          sceltaBuilder_.remove(index);
+          scelteBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public proto.Remotemethod.Info.Builder getSceltaBuilder(
+      public proto.Remotemethod.Scelta.Builder getScelteBuilder(
           int index) {
-        return getSceltaFieldBuilder().getBuilder(index);
+        return getScelteFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public proto.Remotemethod.InfoOrBuilder getSceltaOrBuilder(
+      public proto.Remotemethod.SceltaOrBuilder getScelteOrBuilder(
           int index) {
-        if (sceltaBuilder_ == null) {
-          return scelta_.get(index);  } else {
-          return sceltaBuilder_.getMessageOrBuilder(index);
+        if (scelteBuilder_ == null) {
+          return scelte_.get(index);  } else {
+          return scelteBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public java.util.List<? extends proto.Remotemethod.InfoOrBuilder> 
-           getSceltaOrBuilderList() {
-        if (sceltaBuilder_ != null) {
-          return sceltaBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends proto.Remotemethod.SceltaOrBuilder> 
+           getScelteOrBuilderList() {
+        if (scelteBuilder_ != null) {
+          return scelteBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(scelta_);
+          return java.util.Collections.unmodifiableList(scelte_);
         }
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public proto.Remotemethod.Info.Builder addSceltaBuilder() {
-        return getSceltaFieldBuilder().addBuilder(
-            proto.Remotemethod.Info.getDefaultInstance());
+      public proto.Remotemethod.Scelta.Builder addScelteBuilder() {
+        return getScelteFieldBuilder().addBuilder(
+            proto.Remotemethod.Scelta.getDefaultInstance());
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public proto.Remotemethod.Info.Builder addSceltaBuilder(
+      public proto.Remotemethod.Scelta.Builder addScelteBuilder(
           int index) {
-        return getSceltaFieldBuilder().addBuilder(
-            index, proto.Remotemethod.Info.getDefaultInstance());
+        return getScelteFieldBuilder().addBuilder(
+            index, proto.Remotemethod.Scelta.getDefaultInstance());
       }
       /**
-       * <code>repeated .Info scelta = 1;</code>
+       * <code>repeated .Scelta scelte = 1;</code>
        */
-      public java.util.List<proto.Remotemethod.Info.Builder> 
-           getSceltaBuilderList() {
-        return getSceltaFieldBuilder().getBuilderList();
+      public java.util.List<proto.Remotemethod.Scelta.Builder> 
+           getScelteBuilderList() {
+        return getScelteFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.Remotemethod.Info, proto.Remotemethod.Info.Builder, proto.Remotemethod.InfoOrBuilder> 
-          getSceltaFieldBuilder() {
-        if (sceltaBuilder_ == null) {
-          sceltaBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.Remotemethod.Info, proto.Remotemethod.Info.Builder, proto.Remotemethod.InfoOrBuilder>(
-                  scelta_,
+          proto.Remotemethod.Scelta, proto.Remotemethod.Scelta.Builder, proto.Remotemethod.SceltaOrBuilder> 
+          getScelteFieldBuilder() {
+        if (scelteBuilder_ == null) {
+          scelteBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.Remotemethod.Scelta, proto.Remotemethod.Scelta.Builder, proto.Remotemethod.SceltaOrBuilder>(
+                  scelte_,
                   ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
-          scelta_ = null;
+          scelte_ = null;
         }
-        return sceltaBuilder_;
+        return scelteBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -5899,6 +5962,619 @@ public final class Remotemethod {
 
     @java.lang.Override
     public proto.Remotemethod.ListaScelte getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface SceltaOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Scelta)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 id = 1;</code>
+     */
+    int getId();
+
+    /**
+     * <code>string testo = 2;</code>
+     */
+    java.lang.String getTesto();
+    /**
+     * <code>string testo = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getTestoBytes();
+  }
+  /**
+   * Protobuf type {@code Scelta}
+   */
+  public  static final class Scelta extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:Scelta)
+      SceltaOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Scelta.newBuilder() to construct.
+    private Scelta(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Scelta() {
+      id_ = 0;
+      testo_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Scelta(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              id_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              testo_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.Remotemethod.internal_static_Scelta_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.Remotemethod.internal_static_Scelta_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.Remotemethod.Scelta.class, proto.Remotemethod.Scelta.Builder.class);
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private int id_;
+    /**
+     * <code>int32 id = 1;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
+    public static final int TESTO_FIELD_NUMBER = 2;
+    private volatile java.lang.Object testo_;
+    /**
+     * <code>string testo = 2;</code>
+     */
+    public java.lang.String getTesto() {
+      java.lang.Object ref = testo_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        testo_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string testo = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTestoBytes() {
+      java.lang.Object ref = testo_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        testo_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (id_ != 0) {
+        output.writeInt32(1, id_);
+      }
+      if (!getTestoBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, testo_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, id_);
+      }
+      if (!getTestoBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, testo_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.Remotemethod.Scelta)) {
+        return super.equals(obj);
+      }
+      proto.Remotemethod.Scelta other = (proto.Remotemethod.Scelta) obj;
+
+      boolean result = true;
+      result = result && (getId()
+          == other.getId());
+      result = result && getTesto()
+          .equals(other.getTesto());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
+      hash = (37 * hash) + TESTO_FIELD_NUMBER;
+      hash = (53 * hash) + getTesto().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.Remotemethod.Scelta parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.Remotemethod.Scelta parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.Remotemethod.Scelta parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.Remotemethod.Scelta parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.Remotemethod.Scelta prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Scelta}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Scelta)
+        proto.Remotemethod.SceltaOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.Remotemethod.internal_static_Scelta_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.Remotemethod.internal_static_Scelta_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.Remotemethod.Scelta.class, proto.Remotemethod.Scelta.Builder.class);
+      }
+
+      // Construct using proto.Remotemethod.Scelta.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = 0;
+
+        testo_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.Remotemethod.internal_static_Scelta_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.Remotemethod.Scelta getDefaultInstanceForType() {
+        return proto.Remotemethod.Scelta.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.Remotemethod.Scelta build() {
+        proto.Remotemethod.Scelta result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.Remotemethod.Scelta buildPartial() {
+        proto.Remotemethod.Scelta result = new proto.Remotemethod.Scelta(this);
+        result.id_ = id_;
+        result.testo_ = testo_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.Remotemethod.Scelta) {
+          return mergeFrom((proto.Remotemethod.Scelta)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.Remotemethod.Scelta other) {
+        if (other == proto.Remotemethod.Scelta.getDefaultInstance()) return this;
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
+        if (!other.getTesto().isEmpty()) {
+          testo_ = other.testo_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.Remotemethod.Scelta parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.Remotemethod.Scelta) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>int32 id = 1;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>int32 id = 1;</code>
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 id = 1;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object testo_ = "";
+      /**
+       * <code>string testo = 2;</code>
+       */
+      public java.lang.String getTesto() {
+        java.lang.Object ref = testo_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          testo_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string testo = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTestoBytes() {
+        java.lang.Object ref = testo_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          testo_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string testo = 2;</code>
+       */
+      public Builder setTesto(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        testo_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string testo = 2;</code>
+       */
+      public Builder clearTesto() {
+        
+        testo_ = getDefaultInstance().getTesto();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string testo = 2;</code>
+       */
+      public Builder setTestoBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        testo_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:Scelta)
+    }
+
+    // @@protoc_insertion_point(class_scope:Scelta)
+    private static final proto.Remotemethod.Scelta DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.Remotemethod.Scelta();
+    }
+
+    public static proto.Remotemethod.Scelta getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Scelta>
+        PARSER = new com.google.protobuf.AbstractParser<Scelta>() {
+      @java.lang.Override
+      public Scelta parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Scelta(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Scelta> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Scelta> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.Remotemethod.Scelta getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -6579,9 +7255,14 @@ public final class Remotemethod {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 risposta = 1;</code>
+     * <code>int32 idDomanda = 1;</code>
      */
-    int getRisposta();
+    int getIdDomanda();
+
+    /**
+     * <code>int32 idScelta = 2;</code>
+     */
+    int getIdScelta();
   }
   /**
    * Protobuf type {@code Risposta}
@@ -6596,7 +7277,8 @@ public final class Remotemethod {
       super(builder);
     }
     private Risposta() {
-      risposta_ = 0;
+      idDomanda_ = 0;
+      idScelta_ = 0;
     }
 
     @java.lang.Override
@@ -6625,7 +7307,12 @@ public final class Remotemethod {
               break;
             case 8: {
 
-              risposta_ = input.readInt32();
+              idDomanda_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              idScelta_ = input.readInt32();
               break;
             }
             default: {
@@ -6660,13 +7347,22 @@ public final class Remotemethod {
               proto.Remotemethod.Risposta.class, proto.Remotemethod.Risposta.Builder.class);
     }
 
-    public static final int RISPOSTA_FIELD_NUMBER = 1;
-    private int risposta_;
+    public static final int IDDOMANDA_FIELD_NUMBER = 1;
+    private int idDomanda_;
     /**
-     * <code>int32 risposta = 1;</code>
+     * <code>int32 idDomanda = 1;</code>
      */
-    public int getRisposta() {
-      return risposta_;
+    public int getIdDomanda() {
+      return idDomanda_;
+    }
+
+    public static final int IDSCELTA_FIELD_NUMBER = 2;
+    private int idScelta_;
+    /**
+     * <code>int32 idScelta = 2;</code>
+     */
+    public int getIdScelta() {
+      return idScelta_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -6683,8 +7379,11 @@ public final class Remotemethod {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (risposta_ != 0) {
-        output.writeInt32(1, risposta_);
+      if (idDomanda_ != 0) {
+        output.writeInt32(1, idDomanda_);
+      }
+      if (idScelta_ != 0) {
+        output.writeInt32(2, idScelta_);
       }
       unknownFields.writeTo(output);
     }
@@ -6695,9 +7394,13 @@ public final class Remotemethod {
       if (size != -1) return size;
 
       size = 0;
-      if (risposta_ != 0) {
+      if (idDomanda_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, risposta_);
+          .computeInt32Size(1, idDomanda_);
+      }
+      if (idScelta_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, idScelta_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6715,8 +7418,10 @@ public final class Remotemethod {
       proto.Remotemethod.Risposta other = (proto.Remotemethod.Risposta) obj;
 
       boolean result = true;
-      result = result && (getRisposta()
-          == other.getRisposta());
+      result = result && (getIdDomanda()
+          == other.getIdDomanda());
+      result = result && (getIdScelta()
+          == other.getIdScelta());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -6728,8 +7433,10 @@ public final class Remotemethod {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + RISPOSTA_FIELD_NUMBER;
-      hash = (53 * hash) + getRisposta();
+      hash = (37 * hash) + IDDOMANDA_FIELD_NUMBER;
+      hash = (53 * hash) + getIdDomanda();
+      hash = (37 * hash) + IDSCELTA_FIELD_NUMBER;
+      hash = (53 * hash) + getIdScelta();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6863,7 +7570,9 @@ public final class Remotemethod {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        risposta_ = 0;
+        idDomanda_ = 0;
+
+        idScelta_ = 0;
 
         return this;
       }
@@ -6891,7 +7600,8 @@ public final class Remotemethod {
       @java.lang.Override
       public proto.Remotemethod.Risposta buildPartial() {
         proto.Remotemethod.Risposta result = new proto.Remotemethod.Risposta(this);
-        result.risposta_ = risposta_;
+        result.idDomanda_ = idDomanda_;
+        result.idScelta_ = idScelta_;
         onBuilt();
         return result;
       }
@@ -6940,8 +7650,11 @@ public final class Remotemethod {
 
       public Builder mergeFrom(proto.Remotemethod.Risposta other) {
         if (other == proto.Remotemethod.Risposta.getDefaultInstance()) return this;
-        if (other.getRisposta() != 0) {
-          setRisposta(other.getRisposta());
+        if (other.getIdDomanda() != 0) {
+          setIdDomanda(other.getIdDomanda());
+        }
+        if (other.getIdScelta() != 0) {
+          setIdScelta(other.getIdScelta());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6972,28 +7685,54 @@ public final class Remotemethod {
         return this;
       }
 
-      private int risposta_ ;
+      private int idDomanda_ ;
       /**
-       * <code>int32 risposta = 1;</code>
+       * <code>int32 idDomanda = 1;</code>
        */
-      public int getRisposta() {
-        return risposta_;
+      public int getIdDomanda() {
+        return idDomanda_;
       }
       /**
-       * <code>int32 risposta = 1;</code>
+       * <code>int32 idDomanda = 1;</code>
        */
-      public Builder setRisposta(int value) {
+      public Builder setIdDomanda(int value) {
         
-        risposta_ = value;
+        idDomanda_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 risposta = 1;</code>
+       * <code>int32 idDomanda = 1;</code>
        */
-      public Builder clearRisposta() {
+      public Builder clearIdDomanda() {
         
-        risposta_ = 0;
+        idDomanda_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int idScelta_ ;
+      /**
+       * <code>int32 idScelta = 2;</code>
+       */
+      public int getIdScelta() {
+        return idScelta_;
+      }
+      /**
+       * <code>int32 idScelta = 2;</code>
+       */
+      public Builder setIdScelta(int value) {
+        
+        idScelta_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 idScelta = 2;</code>
+       */
+      public Builder clearIdScelta() {
+        
+        idScelta_ = 0;
         onChanged();
         return this;
       }
@@ -9413,6 +10152,11 @@ public final class Remotemethod {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ListaScelte_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Scelta_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Scelta_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_RispostaAppello_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -9453,23 +10197,25 @@ public final class Remotemethod {
       "ente\022\021\n\tmatricola\030\001 \001(\t\022\022\n\ncodFiscale\030\002 " +
       "\001(\t\022\021\n\tidAppello\030\003 \001(\005\"\037\n\rCodiceAppello\022" +
       "\016\n\006codice\030\001 \001(\t\")\n\014ListaDomande\022\031\n\007doman" +
-      "de\030\001 \003(\0132\010.Domanda\"6\n\007Domanda\022\r\n\005testo\030\001" +
-      " \001(\t\022\034\n\006scelte\030\002 \001(\0132\014.ListaScelte\"$\n\013Li" +
-      "staScelte\022\025\n\006scelta\030\001 \003(\0132\005.Info\"K\n\017Risp" +
-      "ostaAppello\022\021\n\tidAppello\030\001 \001(\005\022%\n\rlistaR" +
-      "isposte\030\002 \001(\0132\016.ListaRisposte\"\034\n\010Rispost" +
-      "a\022\020\n\010risposta\030\001 \001(\005\"N\n\010pRequest\022!\n\tcodAp" +
-      "ello\030\001 \001(\0132\016.CodiceAppello\022\021\n\thostaname\030" +
-      "\002 \001(\t\022\014\n\004port\030\003 \001(\005\"U\n\006Modulo\022\021\n\tidAppel" +
-      "lo\030\001 \001(\005\022%\n\rlistaRisposte\030\002 \001(\0132\016.ListaR" +
-      "isposte\022\021\n\tpunteggio\030\003 \001(\005\",\n\rListaRispo" +
-      "ste\022\033\n\010risposte\030\001 \003(\0132\t.Risposta2\336\001\n\006Sen" +
-      "der\022\'\n\rCaricaAppelli\022\005.Info\032\r.ListaAppel" +
-      "li\"\000\022/\n\020RegistraStudente\022\t.Studente\032\016.Co" +
-      "diceAppello\"\000\022$\n\016PartecipaEsame\022\t.pReque" +
-      "st\032\005.Info\"\000\022&\n\014inviaDomande\022\r.ListaDoman" +
-      "de\032\005.Info\"\000\022,\n\rInviaRisposte\022\020.RispostaA" +
-      "ppello\032\007.Modulo\"\000B\007\n\005protob\006proto3"
+      "de\030\001 \003(\0132\010.Domanda\"B\n\007Domanda\022\n\n\002id\030\001 \001(" +
+      "\005\022\r\n\005testo\030\002 \001(\t\022\034\n\006scelte\030\003 \001(\0132\014.Lista" +
+      "Scelte\"&\n\013ListaScelte\022\027\n\006scelte\030\001 \003(\0132\007." +
+      "Scelta\"#\n\006Scelta\022\n\n\002id\030\001 \001(\005\022\r\n\005testo\030\002 " +
+      "\001(\t\"K\n\017RispostaAppello\022\021\n\tidAppello\030\001 \001(" +
+      "\005\022%\n\rlistaRisposte\030\002 \001(\0132\016.ListaRisposte" +
+      "\"/\n\010Risposta\022\021\n\tidDomanda\030\001 \001(\005\022\020\n\010idSce" +
+      "lta\030\002 \001(\005\"N\n\010pRequest\022!\n\tcodApello\030\001 \001(\013" +
+      "2\016.CodiceAppello\022\021\n\thostaname\030\002 \001(\t\022\014\n\004p" +
+      "ort\030\003 \001(\005\"U\n\006Modulo\022\021\n\tidAppello\030\001 \001(\005\022%" +
+      "\n\rlistaRisposte\030\002 \001(\0132\016.ListaRisposte\022\021\n" +
+      "\tpunteggio\030\003 \001(\005\",\n\rListaRisposte\022\033\n\010ris" +
+      "poste\030\001 \003(\0132\t.Risposta2\336\001\n\006Sender\022\'\n\rCar" +
+      "icaAppelli\022\005.Info\032\r.ListaAppelli\"\000\022/\n\020Re" +
+      "gistraStudente\022\t.Studente\032\016.CodiceAppell" +
+      "o\"\000\022$\n\016PartecipaEsame\022\t.pRequest\032\005.Info\"" +
+      "\000\022&\n\014inviaDomande\022\r.ListaDomande\032\005.Info\"" +
+      "\000\022,\n\rInviaRisposte\022\020.RispostaAppello\032\007.M" +
+      "odulo\"\000B\007\n\005protob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -9524,39 +10270,45 @@ public final class Remotemethod {
     internal_static_Domanda_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Domanda_descriptor,
-        new java.lang.String[] { "Testo", "Scelte", });
+        new java.lang.String[] { "Id", "Testo", "Scelte", });
     internal_static_ListaScelte_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_ListaScelte_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ListaScelte_descriptor,
-        new java.lang.String[] { "Scelta", });
-    internal_static_RispostaAppello_descriptor =
+        new java.lang.String[] { "Scelte", });
+    internal_static_Scelta_descriptor =
       getDescriptor().getMessageTypes().get(8);
+    internal_static_Scelta_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Scelta_descriptor,
+        new java.lang.String[] { "Id", "Testo", });
+    internal_static_RispostaAppello_descriptor =
+      getDescriptor().getMessageTypes().get(9);
     internal_static_RispostaAppello_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_RispostaAppello_descriptor,
         new java.lang.String[] { "IdAppello", "ListaRisposte", });
     internal_static_Risposta_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_Risposta_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Risposta_descriptor,
-        new java.lang.String[] { "Risposta", });
+        new java.lang.String[] { "IdDomanda", "IdScelta", });
     internal_static_pRequest_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_pRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_pRequest_descriptor,
         new java.lang.String[] { "CodApello", "Hostaname", "Port", });
     internal_static_Modulo_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_Modulo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Modulo_descriptor,
         new java.lang.String[] { "IdAppello", "ListaRisposte", "Punteggio", });
     internal_static_ListaRisposte_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_ListaRisposte_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ListaRisposte_descriptor,
