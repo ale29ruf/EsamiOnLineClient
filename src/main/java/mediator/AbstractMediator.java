@@ -18,7 +18,7 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
 
     Lock l = new ReentrantLock();
     Executor esecutore = Executors.newSingleThreadExecutor();
-    final int port = 9000;
+    int port;
 
     JPanel pannello;
     JToolBar barraControllo;
@@ -26,7 +26,6 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     JButton caricaAppelli;
     JButton prenotaButton;
     JButton partecipaButton;
-
 
     int idAppello;
 

@@ -14,8 +14,8 @@ import proto.SenderGrpc;
 
 import javax.swing.*;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.Scanner;
+
 
 public class Controller extends AbstractMediator{ //Si occupa della comunicazione remota
 
@@ -65,6 +65,11 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
         if(jDialogCod.isConfirmed()){
             String codice = jDialogCod.getCodice();
             Model m = new InfoProtoAdapter(this);
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Inserisci la porta: ");
+            port = scanner.nextInt();
+
             RichiestaPartecipazioneAppello task = new RichiestaPartecipazioneAppello(m,stub,codice,hostname,port);
             esecutore.execute(task);
         }
