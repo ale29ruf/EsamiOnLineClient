@@ -2,10 +2,7 @@ package strategyvisualizer;
 
 import guicomponent.JPanelQuery;
 import guicomponent.JSenderButton;
-import guiprova.PannelloQuery;
-import guiprova.Prova;
-import mediator.AbstractMediator;
-import mediator.Mediatore;
+import guicomponent.PannelloQuery;
 import proto.Remotemethod;
 import protoadapter.ListaDomandeProtoAdapter;
 import protoadapter.Model;
