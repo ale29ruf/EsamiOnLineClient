@@ -4,7 +4,7 @@ package guicomponent;
 import javax.swing.*;
 
 public class PannelloQuery extends JPanel {
-    JPanelQuery jPanelQuery;
+    private JPanelQuery jPanelQuery;
 
     public void setPannello(JPanelQuery jPanelQuery){
         this.jPanelQuery = jPanelQuery;

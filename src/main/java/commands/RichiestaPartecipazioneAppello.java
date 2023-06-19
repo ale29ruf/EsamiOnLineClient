@@ -5,9 +5,9 @@ import proto.SenderGrpc;
 import protoadapter.Model;
 
 public class RichiestaPartecipazioneAppello extends Thread{
-    Model model;
-    SenderGrpc.SenderBlockingStub stub;
-    Remotemethod.pRequest richiestaP;
+    private final Model model;
+    private final SenderGrpc.SenderBlockingStub stub;
+    private final Remotemethod.pRequest richiestaP;
 
     public RichiestaPartecipazioneAppello(Model model, SenderGrpc.SenderBlockingStub stub, String codice, String hostname, int port){
         this.stub = stub;

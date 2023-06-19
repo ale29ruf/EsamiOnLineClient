@@ -19,15 +19,14 @@ import java.util.Scanner;
 
 public class Controller extends AbstractMediator{ //Si occupa della comunicazione remota
 
-    ManagedChannel channel;
-    SenderGrpc.SenderBlockingStub stub;
+    private final SenderGrpc.SenderBlockingStub stub;
 
-    final String hostname = "localhost";
+    private final String hostname = "localhost";
 
 
 
     public Controller(String hostname, int port){
-        channel = ManagedChannelBuilder.forAddress(hostname, port).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(hostname, port).usePlaintext().build();
         stub = SenderGrpc.newBlockingStub(channel);
     }
 
@@ -79,6 +78,7 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
     @Override
     public void comunicaRisposte(List<Remotemethod.Risposta> lista){
         comunicaPunteggioInCorso();
+        System.out.println("Lista risposte: "+lista.toString());
         Model m = new ModuloProtoAdapter(this);
         InviaRisposte task = new InviaRisposte(m,stub,lista,super.idAppello);
         esecutore.execute(task);

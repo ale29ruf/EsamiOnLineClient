@@ -2,10 +2,10 @@ package guicomponent;
 
 import javax.swing.*;
 
-public class JCheckBoxWithId extends JCheckBox {
+public class JRadioButtonWithId extends JCheckBox {
     private int idScelta;
 
-    public JCheckBoxWithId(String testoScelta, int idScelta) {
+    public JRadioButtonWithId(String testoScelta, int idScelta) {
         super(testoScelta);
         this.idScelta = idScelta;
     }

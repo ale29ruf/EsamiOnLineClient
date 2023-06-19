@@ -16,26 +16,21 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class AbstractMediator implements Mediatore{ //Si occupa della comunicazione locale
 
-    Lock l = new ReentrantLock();
+    private Lock l = new ReentrantLock();
     Executor esecutore = Executors.newSingleThreadExecutor();
     int port;
 
-    JPanel pannello;
-    JToolBar barraControllo;
-    JTextArea logger;
-    JButton caricaAppelli;
-    JButton prenotaButton;
-    JButton partecipaButton;
+    private JPanel pannello;
+    private JTextArea logger;
+    private JButton caricaAppelli;
+    private JButton prenotaButton;
+    private JButton partecipaButton;
 
     int idAppello;
 
 
     public void setPannello(JPanel pannello){
         this.pannello = pannello;
-    }
-
-    public void setBarraControllo(JToolBar barraControllo){
-        this.barraControllo = barraControllo;
     }
 
     public void setLogger(JTextArea logger){

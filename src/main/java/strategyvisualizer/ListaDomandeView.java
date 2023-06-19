@@ -22,8 +22,8 @@ public class ListaDomandeView implements Strategy{
     static int timeInSecond = 10; //tempo massimo a disposizione per ogni domanda
     static Lock lock = new ReentrantLock();
 
-    int nDomande;
-    int pass; //indice della domanda attualmente mostrata
+    private int nDomande;
+    private int pass; //indice della domanda attualmente mostrata
 
 
     @Override
@@ -106,15 +106,17 @@ public class ListaDomandeView implements Strategy{
         return concludiTest;
     }
 
-    public static void changeQuery(Queue<JPanelQuery> codaJPanelQueryDaMostrare,PannelloQuery pannelloQuery,
+    static void changeQuery(Queue<JPanelQuery> codaJPanelQueryDaMostrare,PannelloQuery pannelloQuery,
                                    JButton conferma,JSenderButton concludiTest){
         try{
+            System.out.println("Nel metodo change query");
             lock.lock();
             JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
             concludiTest.addRisposta(Remotemethod.Risposta.newBuilder().setIdDomanda(jPanelQuery.getIdDomanda()).setIdScelta(jPanelQuery.getOpzione())
                     .build());
             pannelloQuery.removePannello();
             if(codaJPanelQueryDaMostrare.isEmpty()){
+                System.out.println("Lista dei pannelli vuota");
                 conferma.setVisible(false);
                 concludiTest.setVisible(true);
             } else {
@@ -130,9 +132,9 @@ public class ListaDomandeView implements Strategy{
 
 class HandlerTimeout extends Thread{
 
-    AtomicBoolean stop = new AtomicBoolean(false);
-    AtomicBoolean ritarda = new AtomicBoolean(false);
-    int time;
+    private AtomicBoolean stop = new AtomicBoolean(false);
+    private AtomicBoolean ritarda = new AtomicBoolean(false);
+    private int time;
     Queue<JPanelQuery> codaJPanelQueryDaMostrare; PannelloQuery pannelloQuery; JButton conferma; JSenderButton concludiTest;
     public HandlerTimeout(Queue<JPanelQuery> codaJPanelQueryDaMostrare, PannelloQuery pannelloQuery, JButton conferma, JSenderButton concludiTest, int time) {
         this.time = time;

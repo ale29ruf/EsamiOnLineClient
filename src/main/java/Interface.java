@@ -33,7 +33,6 @@ public class Interface {
 
         Controller mediatore = new Controller("localhost",8999);
         mediatore.setPannello(panel);
-        mediatore.setBarraControllo(selettore);
         mediatore.setPartecipaAppelliButton(partecipaAppelliButton);
         mediatore.setLogger(logger);
         mediatore.setCaricaAppelliButton(visualizzaAppelliButton);

@@ -12,8 +12,8 @@ public class JPanelQuery extends JPanel {
     private JLabel testoDomanda;
     private int idDomanda;
     private List<JCheckBox> listaButtoni;
-    JProgressBar progressBar;
-    ProgressBarHandler gestoreBarra;
+    private JProgressBar progressBar;
+    private ProgressBarHandler gestoreBarra;
 
     public JPanelQuery(Remotemethod.Domanda domanda) {
         if(domanda == null)
@@ -28,9 +28,11 @@ public class JPanelQuery extends JPanel {
         add(testoDomanda, BorderLayout.EAST);
 
         listaButtoni = new LinkedList<>();
+        ButtonGroup group = new ButtonGroup();
         for(Remotemethod.Scelta scelta : domanda.getScelte().getScelteList()) {
-            JCheckBoxWithId button = new JCheckBoxWithId(scelta.getTesto(),scelta.getId());
+            JRadioButtonWithId button = new JRadioButtonWithId(scelta.getTesto(),scelta.getId());
             listaButtoni.add(button);
+            group.add(button);
             add(button);
         }
 
@@ -49,7 +51,7 @@ public class JPanelQuery extends JPanel {
         gestoreBarra.interrupt();
         for(int i=0; i<listaButtoni.size(); i++)
             if(listaButtoni.get(i).isSelected())
-                return ((JCheckBoxWithId)(listaButtoni.get(i))).getIdScelta();
+                return ((JRadioButtonWithId)(listaButtoni.get(i))).getIdScelta();
         return -1;
     }
 
