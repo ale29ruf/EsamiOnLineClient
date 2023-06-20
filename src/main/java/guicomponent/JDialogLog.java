@@ -19,9 +19,9 @@ public class JDialogLog extends JDialog {
         pannelloOut.add(pannelloIn, BorderLayout.CENTER);
         pannelloOut.add(pannelloButton, BorderLayout.SOUTH);
 
-        super.setContentPane(pannelloOut);
-        super.setSize(300, 150);
-        super.setLocationRelativeTo(f); //centra la finestra di dialogo rispetto alla finestra principale
+        setContentPane(pannelloOut);
+        setSize(300, 150);
+        setLocationRelativeTo(f); //centra la finestra di dialogo rispetto alla finestra principale
     }
 
     private JPanel creaBottonPanel() {

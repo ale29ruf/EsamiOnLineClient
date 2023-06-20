@@ -43,7 +43,6 @@ public class JPanelQuery extends JPanel {
 
     public void avvia(){
         gestoreBarra = new ProgressBarHandler(progressBar);
-        System.out.println("Thread settato da "+Thread.currentThread().getName());
         gestoreBarra.start();
     }
 
@@ -73,9 +72,7 @@ class ProgressBarHandler extends Thread {
         while(i<100){
             try {
                 TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                System.out.println();
-            }
+            } catch (InterruptedException e) {}
             i++;
             jProgressBar.setValue(i);
         }

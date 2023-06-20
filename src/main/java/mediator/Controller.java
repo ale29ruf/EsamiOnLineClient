@@ -73,6 +73,7 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
             esecutore.execute(task);
         }
 
+
     }
 
     @Override

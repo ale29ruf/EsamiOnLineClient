@@ -19,8 +19,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ListaDomandeView implements Strategy{
 
-    static int timeInSecond = 10; //tempo massimo a disposizione per ogni domanda
-    static Lock lock = new ReentrantLock();
+    private int timeInSecond = 10; //tempo massimo a disposizione per ogni domanda
+    private Lock lock = new ReentrantLock();
 
     private int nDomande;
     private int pass; //indice della domanda attualmente mostrata
@@ -69,7 +69,6 @@ public class ListaDomandeView implements Strategy{
             timeout.start();
         }
 
-
         ActionListener azioneDiConferma = e -> {
             try{
                 lock.lock();
@@ -86,6 +85,9 @@ public class ListaDomandeView implements Strategy{
                 }
 
                 changeQuery(codaJPanelQueryDaMostrare,pannelloQuery,conferma,concludiTest);
+
+                pannello.revalidate();
+                pannello.repaint();
             } finally {
                 lock.unlock();
             }
@@ -96,7 +98,7 @@ public class ListaDomandeView implements Strategy{
 
         pannello.add(pannelloQuery, BorderLayout.CENTER);
 
-        pannello.add(concludiTest, BorderLayout.EAST);
+        pannello.add(concludiTest, BorderLayout.SOUTH);
         pannello.add(conferma, BorderLayout.EAST);
 
         //Operazioni necessarie altrimenti occorre ridimensionare leggermente la finestra per vedere gli elementi aggiunti
@@ -106,19 +108,21 @@ public class ListaDomandeView implements Strategy{
         return concludiTest;
     }
 
-    static void changeQuery(Queue<JPanelQuery> codaJPanelQueryDaMostrare,PannelloQuery pannelloQuery,
+    void changeQuery(Queue<JPanelQuery> codaJPanelQueryDaMostrare,PannelloQuery pannelloQuery,
                                    JButton conferma,JSenderButton concludiTest){
         try{
-            System.out.println("Nel metodo change query");
             lock.lock();
             JPanelQuery jPanelQuery = codaJPanelQueryDaMostrare.poll();
             concludiTest.addRisposta(Remotemethod.Risposta.newBuilder().setIdDomanda(jPanelQuery.getIdDomanda()).setIdScelta(jPanelQuery.getOpzione())
                     .build());
             pannelloQuery.removePannello();
             if(codaJPanelQueryDaMostrare.isEmpty()){
-                System.out.println("Lista dei pannelli vuota");
                 conferma.setVisible(false);
                 concludiTest.setVisible(true);
+
+                pannelloQuery.revalidate();
+                pannelloQuery.repaint();
+
             } else {
                 pannelloQuery.setPannello(codaJPanelQueryDaMostrare.peek());
             }
@@ -128,62 +132,58 @@ public class ListaDomandeView implements Strategy{
 
     }
 
-}
+    private class HandlerTimeout extends Thread{
 
-class HandlerTimeout extends Thread{
-
-    private AtomicBoolean stop = new AtomicBoolean(false);
-    private AtomicBoolean ritarda = new AtomicBoolean(false);
-    private int time;
-    Queue<JPanelQuery> codaJPanelQueryDaMostrare; PannelloQuery pannelloQuery; JButton conferma; JSenderButton concludiTest;
-    public HandlerTimeout(Queue<JPanelQuery> codaJPanelQueryDaMostrare, PannelloQuery pannelloQuery, JButton conferma, JSenderButton concludiTest, int time) {
-        this.time = time;
-        this.codaJPanelQueryDaMostrare = codaJPanelQueryDaMostrare;
-        this.pannelloQuery = pannelloQuery;
-        this.conferma = conferma;
-        this.concludiTest = concludiTest;
-    }
-
-    public void run(){
-        try {
-            TimeUnit.SECONDS.sleep(time);
-        } catch (InterruptedException e) {
-            System.out.println("Catch dell'InterruptedException");
-        }
-        if(stop.get()) {
-            System.out.println("Non faccio nulla dato che sono interrotto");
-            return;
+        private AtomicBoolean stop = new AtomicBoolean(false);
+        private AtomicBoolean ritarda = new AtomicBoolean(false);
+        private int time;
+        Queue<JPanelQuery> codaJPanelQueryDaMostrare; PannelloQuery pannelloQuery; JButton conferma; JSenderButton concludiTest;
+        public HandlerTimeout(Queue<JPanelQuery> codaJPanelQueryDaMostrare, PannelloQuery pannelloQuery, JButton conferma, JSenderButton concludiTest, int time) {
+            this.time = time;
+            this.codaJPanelQueryDaMostrare = codaJPanelQueryDaMostrare;
+            this.pannelloQuery = pannelloQuery;
+            this.conferma = conferma;
+            this.concludiTest = concludiTest;
         }
 
-        if(ritarda.get()){
+        public void run(){
             try {
-                TimeUnit.SECONDS.sleep(ListaDomandeView.timeInSecond);
+                TimeUnit.SECONDS.sleep(time);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
             if(stop.get()) {
-                System.out.println("Non faccio nulla dato che sono interrotto");
                 return;
             }
+
+            if(ritarda.get()) {
+                try {
+                    TimeUnit.SECONDS.sleep(timeInSecond);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            if(stop.get()) {
+            } else {
+                changeQuery(codaJPanelQueryDaMostrare,pannelloQuery,conferma,concludiTest);
+            }
+
         }
 
-        if(stop.get()) {
-            System.out.println("Non faccio nulla dato che sono interrotto");
-            return;
+        public void interrompi() {
+            stop.set(true);
         }
-        ListaDomandeView.changeQuery(codaJPanelQueryDaMostrare,pannelloQuery,conferma,concludiTest);
+
+        public boolean eInterrotto(){
+            return stop.get();
+        }
+
+        public void ritarda() {
+            ritarda.set(true);
+            interrupt();
+        }
     }
 
-    public void interrompi() {
-        stop.set(true);
-    }
-
-    public boolean eInterrotto(){
-        return stop.get();
-    }
-
-    public void ritarda() {
-        ritarda.set(true);
-        interrupt();
-    }
 }
+
+
