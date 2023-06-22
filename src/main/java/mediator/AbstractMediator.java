@@ -1,9 +1,9 @@
 package mediator;
 
-import commands.RecivitoreListaDomande;
+import proto.Remotemethod;
+import task.RecivitoreListaDomande;
 import guicomponent.JDialogModul;
 import guicomponent.JSenderButton;
-import proto.Remotemethod;
 import protoadapter.*;
 import strategyvisualizer.Strategy;
 
@@ -14,18 +14,30 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * La classe AbstractMediator si occupa di gestire la comunicazione tra le varie componenti dell'interfaccia grafica
+ *  (quindi in locale).
+ * Inoltre si occupa anche di ricevere le risposte dal server, tramite notifica degli adapter, ed eseguire le relative
+ * operazioni.
+ */
+
 public abstract class AbstractMediator implements Mediatore{ //Si occupa della comunicazione locale
 
-    private Lock l = new ReentrantLock();
-    Executor esecutore = Executors.newSingleThreadExecutor();
-    int port;
+    private Lock l = new ReentrantLock(); //Lock usato per sincronizzare l'accesso al logger
 
+    Executor esecutore = Executors.newSingleThreadExecutor(); //Per comodità si è fatto uso di un esecutore a cui sottomettere i vari task (pattern command nativo di java)
+
+    int port; //porta su cui il client si mette in attesa per ricevere le domande di un appello
+
+    //Colleghi:
     private JPanel pannello;
     private JTextArea logger;
     private JButton caricaAppelli;
     private JButton prenotaButton;
     private JButton partecipaButton;
 
+
+    //Id dell'appello settato ogni volta che l'utente clicca su un appello mostrato nella JTable
     int idAppello;
 
 
@@ -69,8 +81,8 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         appelloJTabel.getSelectionModel().addListSelectionListener(event -> {
             // Codice da eseguire quando viene selezionata una riga
             if (!event.getValueIsAdjusting()) {
-                idAppello = (int) appelloJTabel.getValueAt(appelloJTabel.getSelectedRow(),0);
-                prenotaButton.setEnabled(true);
+                idAppello = (int) appelloJTabel.getValueAt(appelloJTabel.getSelectedRow(),0); //setting dell'id dell'appello selezionato
+                prenotaButton.setEnabled(true); //abilitiamo la possibilità dell'utente di prenotarsi
             }
         });
 
@@ -101,8 +113,8 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
         RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
         esecutore.execute(task);
 
-        //il task viene creato ed eseguito in questa classe e non in Controller perchè di fatto non deve
-        //comunicare nulla al server ma aspetta di essere contattato da questo
+        //Il task viene creato e sottomesso all'esecutore in questa classe e non in Controller perchè di fatto non deve
+        //essere comunicato nulla al server ma al contrario, ci si aspetta di essere comunicati da lui.
     }
 
     private void setPulsanti(boolean set) {
@@ -112,13 +124,13 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     }
 
     public void domandeRicevute(ListaDomandeProtoAdapter domande){
-        comunicaLogger("Appello iniziato");
+        comunicaLogger("Appello iniziato"); //Potrebbe creare race condition sul logger
         Strategy visualizer = CollegueViewFactory.FACTORY.createViewStrategy(ListaDomandeProtoAdapter.class);
         JSenderButton jSenderButton = (JSenderButton) visualizer.proietta(domande,pannello);
         jSenderButton.addActionListener(e -> {
             jSenderButton.setVisible(false);
             List<Remotemethod.Risposta> risposte = jSenderButton.getListaRisposte();
-            comunicaRisposte(risposte); //anche in questo caso, il jSenderButton (collega), conosce solo il mediatore concreto cosi' come tutti gli altri in modo da effettuare l'invio per mezzo dello stub
+            comunicaRisposte(risposte); //anche in questo caso il jSenderButton (collega), conosce solo l'interfaccia del mediatore cosi' come tutti gli altri
         });
     }
 
@@ -145,6 +157,10 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
 
     public void comunicaPunteggioInCorso(){ comunicaLogger("Inoltro domande in corso ...");}
 
+
+    /**
+     * Il metodo viene eseguito in mutua esclusione grazie all'utilizzo di un lock.
+     */
     private void comunicaLogger(String comunicazione){
         try{
             l.lock();

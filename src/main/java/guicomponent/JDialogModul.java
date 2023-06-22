@@ -12,6 +12,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * La classe permette all'utente di visualizzare il modulo di risposta inviato dal server contenente sia il punteggio che le
+ * risposte esatte per ogni domanda.
+ */
 public class JDialogModul extends JDialog {
 
     public JDialogModul(JFrame f, ModuloProtoAdapter modulo){

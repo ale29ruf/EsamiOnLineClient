@@ -1,17 +1,18 @@
-package commands;
+package task;
 
 import proto.Remotemethod;
 import proto.SenderGrpc;
 import protoadapter.Model;
-import protoadapter.ModuloProtoAdapter;
 
-import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Il task si occupa di inviare le risposte raccolte dal client, al server.
+ */
 public class InviaRisposte extends Thread{
-    Model m;
-    SenderGrpc.SenderBlockingStub stub;
-    Remotemethod.RispostaAppello response;
+    private final Model m;
+    private final SenderGrpc.SenderBlockingStub stub;
+    private final Remotemethod.RispostaAppello response;
 
     public InviaRisposte(Model m, SenderGrpc.SenderBlockingStub stub, List<Remotemethod.Risposta> risposte, int idAppello) {
         this.m = m;

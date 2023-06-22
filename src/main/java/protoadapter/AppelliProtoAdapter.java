@@ -7,8 +7,8 @@ import proto.Remotemethod;
 import java.util.List;
 
 public class AppelliProtoAdapter implements Model {
-    Remotemethod.ListaAppelli appelli;
-    AbstractMediator mediator;
+    private Remotemethod.ListaAppelli appelli;
+    private AbstractMediator mediator;
 
     public AppelliProtoAdapter(Remotemethod.ListaAppelli appelli, AbstractMediator mediator){
         this.appelli = appelli;

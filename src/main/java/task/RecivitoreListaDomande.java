@@ -1,17 +1,20 @@
-package commands;
+package task;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import proto.SenderGrpc;
 import protoadapter.Model;
 import support.ReciverImpl;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Il thread si mette in attesa su una determinata porta per ricevere la lista delle domande dal server. Cosi' facendo
+ * evitiamo che l'intera applicazione client si blocchi.
+ */
 public class RecivitoreListaDomande extends Thread {
-    Model m;
-    int port;
+    private final Model m;
+    private final int port;
 
     public RecivitoreListaDomande(Model m, int port) {
         this.port = port;

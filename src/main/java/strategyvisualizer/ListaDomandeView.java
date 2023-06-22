@@ -17,12 +17,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * La classe gestisce i vari JPanelQuery per un determinato appello.
+ */
 public class ListaDomandeView implements Strategy{
 
-    private int timeInSecond = 10; //tempo massimo a disposizione per ogni domanda
+    private int timeInSecond = 100; //tempo massimo a disposizione per ogni domanda
     private Lock lock = new ReentrantLock();
 
-    private int nDomande;
+    private int nDomande; //numero di domande per l'appello da gestire
     private int pass; //indice della domanda attualmente mostrata
 
 

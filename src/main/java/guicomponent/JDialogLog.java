@@ -3,7 +3,15 @@ package guicomponent;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * La classe permette all'utente di inserire le sue credenziali per poter prenotare un appello.
+ */
 public class JDialogLog extends JDialog {
+
+    private final int lenMatricola = 6;
+    private final int lenCodFiscale = 16;
+
     private final JTextField matricola = new JTextField(10);
     private final JTextField codFiscale = new JTextField(20);
     private boolean pronto = false;
@@ -28,7 +36,7 @@ public class JDialogLog extends JDialog {
         JButton inviaInfo = new JButton("Invia");
         JButton annullaOp = new JButton("Annulla");
         inviaInfo.addActionListener(e -> {
-            if(matricola.getText().length() == 5 && codFiscale.getText().length() == 10) {
+            if(matricola.getText().length() == lenMatricola && codFiscale.getText().length() == lenCodFiscale) {
                 pronto = true;
                 dispose(); //fa scomparire la finestra
             } else

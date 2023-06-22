@@ -5,8 +5,8 @@ import mediator.AbstractMediator;
 import proto.Remotemethod;
 
 public class ModuloProtoAdapter implements Model{
-    AbstractMediator mediator;
-    Remotemethod.Modulo modulo;
+    private AbstractMediator mediator;
+    private Remotemethod.Modulo modulo;
 
 
     public ModuloProtoAdapter(AbstractMediator mediator) {

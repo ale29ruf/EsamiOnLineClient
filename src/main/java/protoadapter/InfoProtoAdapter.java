@@ -6,8 +6,8 @@ import mediator.Mediatore;
 import proto.Remotemethod;
 
 public class InfoProtoAdapter implements Model{
-    AbstractMediator mediator;
-    Remotemethod.Info info;
+    private AbstractMediator mediator;
+    private Remotemethod.Info info;
 
     public InfoProtoAdapter(AbstractMediator m){
         mediator = m;

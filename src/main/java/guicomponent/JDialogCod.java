@@ -3,8 +3,13 @@ package guicomponent;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * La classe viene utilizzata per permettere all'utente di inserire il codice di partecipazione ad un appello.
+ */
 public class JDialogCod extends JDialog {
-    private final JTextField codice = new JTextField(32);
+
+    private final int lenCodice = 32;
+    private final JTextField codice = new JTextField(lenCodice);
     private boolean pronto = false;
 
     public JDialogCod(JFrame f){
@@ -27,7 +32,7 @@ public class JDialogCod extends JDialog {
         JButton annullaOp = new JButton("Annulla");
 
         inviaInfo.addActionListener(e -> {
-            if(codice.getText().length() == 32) {
+            if(codice.getText().length() == lenCodice) {
                 pronto = true;
                 dispose(); //fa scomparire la finestra
             } else

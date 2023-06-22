@@ -6,6 +6,9 @@ import protoadapter.AppelliProtoAdapter;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
+/**
+ * La classe viene utilizzata per far visualizzare la lista degli appelli al client.
+ */
 public class ElementInTable extends AbstractTableModel {
     private final String[] columnNames = {"Id appello", "Nome", "Data e ora", "Durata"};
     List<Remotemethod.Appello> appelli;

@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class JSenderButton extends JButton {
-    List<Remotemethod.Risposta> listaRisposte = new LinkedList<>();
+    private final List<Remotemethod.Risposta> listaRisposte = new LinkedList<>();
 
     public JSenderButton(String concludiTest) {
         super(concludiTest);

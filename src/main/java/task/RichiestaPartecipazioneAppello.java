@@ -1,9 +1,12 @@
-package commands;
+package task;
 
 import proto.Remotemethod;
 import proto.SenderGrpc;
 import protoadapter.Model;
 
+/**
+ * Il task viene utilizzato per richiedere al server di partecipare a un appello.
+ */
 public class RichiestaPartecipazioneAppello extends Thread{
     private final Model model;
     private final SenderGrpc.SenderBlockingStub stub;

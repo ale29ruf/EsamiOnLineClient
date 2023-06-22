@@ -8,8 +8,8 @@ import proto.Remotemethod;
 import java.util.List;
 
 public class ListaDomandeProtoAdapter implements Model{
-    AbstractMediator mediator;
-    Remotemethod.ListaDomande domande;
+    private AbstractMediator mediator;
+    private Remotemethod.ListaDomande domande;
 
     public ListaDomandeProtoAdapter(AbstractMediator mediator){
         this.mediator = mediator;

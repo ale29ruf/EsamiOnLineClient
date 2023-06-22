@@ -2,12 +2,12 @@ import protoadapter.AppelliProtoAdapter;
 import protoadapter.CollegueViewFactory;
 import mediator.Controller;
 import protoadapter.ListaDomandeProtoAdapter;
-import protoadapter.ModuloProtoAdapter;
 import strategyvisualizer.ListaAppelliView;
 import strategyvisualizer.ListaDomandeView;
 
 import javax.swing.*;
 import java.awt.*;
+
 
 public class Interface {
     public static void main(String[] args){
@@ -32,16 +32,17 @@ public class Interface {
         selettore.add(logger);
 
         Controller mediatore = new Controller("localhost",8999);
+
+        //Setto le varie componenti al mediatore in modo che possa conoscerli
         mediatore.setPannello(panel);
         mediatore.setPartecipaAppelliButton(partecipaAppelliButton);
         mediatore.setLogger(logger);
         mediatore.setCaricaAppelliButton(visualizzaAppelliButton);
         mediatore.setPrenotaButton(prenotaButton);
 
+        //Nonostante le componenti ricevano il mediatore concreto, dipendono solo dall'interfaccia.
         visualizzaAppelliButton.addActionListener((evt) -> mediatore.caricaAppelli());
-
         prenotaButton.addActionListener((evt) -> mediatore.registraStudente(prenotaButton));
-
         partecipaAppelliButton.addActionListener(evt -> mediatore.partecipaAppello(partecipaAppelliButton));
 
 

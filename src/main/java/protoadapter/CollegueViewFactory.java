@@ -1,11 +1,13 @@
 package protoadapter;
 
-import protoadapter.Model;
 import strategyvisualizer.Strategy;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Il CollegueViewFactory fornisce la strategia di visualizzazione delle liste di domande o appelli.
+ */
 public enum CollegueViewFactory {
 
     FACTORY;

@@ -6,6 +6,9 @@ import proto.Remotemethod;
 import javax.swing.*;
 import java.util.List;
 
+/**
+ * Interfaccia da cui dipendono le varie componenti grafiche del sistema.
+ */
 public interface Mediatore {
 
     void caricaAppelli();

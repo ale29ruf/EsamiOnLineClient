@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * La classe si occupa della gestione di una sola domanda e del relativo JProgressBar.
+ */
 public class JPanelQuery extends JPanel {
     private JLabel testoDomanda;
     private int idDomanda;

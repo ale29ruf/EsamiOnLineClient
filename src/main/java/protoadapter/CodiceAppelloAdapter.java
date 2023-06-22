@@ -5,8 +5,8 @@ import mediator.AbstractMediator;
 import proto.Remotemethod;
 
 public class CodiceAppelloAdapter implements Model {
-    AbstractMediator mediator;
-    Remotemethod.CodiceAppello codiceAppello;
+    private AbstractMediator mediator;
+    private Remotemethod.CodiceAppello codiceAppello;
 
 
     public CodiceAppelloAdapter(AbstractMediator mediator) {

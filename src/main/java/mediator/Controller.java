@@ -1,9 +1,9 @@
 package mediator;
 
-import commands.CaricaAppelli;
-import commands.InviaRegistrazioneStudente;
-import commands.InviaRisposte;
-import commands.RichiestaPartecipazioneAppello;
+import task.CaricaAppelli;
+import task.InviaRegistrazioneStudente;
+import task.InviaRisposte;
+import task.RichiestaPartecipazioneAppello;
 import guicomponent.JDialogCod;
 import proto.Remotemethod;
 import protoadapter.*;
@@ -17,11 +17,15 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class Controller extends AbstractMediator{ //Si occupa della comunicazione remota
+/**
+ * Questa classe di occupa d'implementare tutti i metodi dell'interfaccia.
+ * Inoltre gestisce la comuinicazione remota tra client e server.
+ */
+public class Controller extends AbstractMediator{
 
     private final SenderGrpc.SenderBlockingStub stub;
 
-    private final String hostname = "localhost";
+    private final String hostname = "localhost"; //hostname utilizzato per instaurare una connessione verso il server e ricevere le domande di un appello
 
 
 
@@ -32,7 +36,7 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
 
     @Override
     public void caricaAppelli() {
-        super.comunicaCaricamentoAppello();
+        comunicaCaricamentoAppello();
         Model m = new AppelliProtoAdapter(this);
         CaricaAppelli task = new CaricaAppelli(m,stub);
         esecutore.execute(task);
@@ -65,6 +69,7 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
             String codice = jDialogCod.getCodice();
             Model m = new InfoProtoAdapter(this);
 
+            //Quando avviamo piu' client sulla stessa macchina, abbiamo bisogno di specificare per ciascuno di questi una porta differente
             Scanner scanner = new Scanner(System.in);
             System.out.print("Inserisci la porta: ");
             port = scanner.nextInt();
@@ -79,7 +84,6 @@ public class Controller extends AbstractMediator{ //Si occupa della comunicazion
     @Override
     public void comunicaRisposte(List<Remotemethod.Risposta> lista){
         comunicaPunteggioInCorso();
-        System.out.println("Lista risposte: "+lista.toString());
         Model m = new ModuloProtoAdapter(this);
         InviaRisposte task = new InviaRisposte(m,stub,lista,super.idAppello);
         esecutore.execute(task);

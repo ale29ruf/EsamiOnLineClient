@@ -5,7 +5,9 @@ import proto.Remotemethod;
 import proto.SenderGrpc;
 import protoadapter.Model;
 
-
+/**
+ * Classe di supporto che gestisce la ricezione delle domande mandate dal server.
+ */
 public class ReciverImpl extends SenderGrpc.SenderImplBase {
     Model m;
 
