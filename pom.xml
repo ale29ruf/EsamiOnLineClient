@@ -47,6 +47,8 @@
         </dependency>
     </dependencies>
 
+
+
     <build>
         <defaultGoal>clean generate-sources compile install</defaultGoal>
 
