@@ -40,6 +40,9 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
     //Id dell'appello settato ogni volta che l'utente clicca su un appello mostrato nella JTable
     int idAppello;
 
+    public AbstractMediator(int clientPort){
+        this.port = clientPort;
+    }
 
     public void setPannello(JPanel pannello){
         this.pannello = pannello;
@@ -110,7 +113,7 @@ public abstract class AbstractMediator implements Mediatore{ //Si occupa della c
 
         setPulsanti(false);
         Model m = new ListaDomandeProtoAdapter(this);
-        RecivitoreListaDomande task = new RecivitoreListaDomande(m,port);
+        RecivitoreListaDomande task = new RecivitoreListaDomande(m, port);
         esecutore.execute(task);
 
         //Il task viene creato e sottomesso all'esecutore in questa classe e non in Controller perchè di fatto non deve

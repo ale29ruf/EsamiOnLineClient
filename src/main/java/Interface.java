@@ -10,7 +10,8 @@ import java.awt.*;
 
 
 public class Interface {
-    public static void main(String[] args){
+
+    public Interface(int serverPort, int clientPort){
         JFrame f = new JFrame("Applicazione client-server");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setMinimumSize(new Dimension(1000, 700));
@@ -31,7 +32,7 @@ public class Interface {
         JTextArea logger = new JTextArea();
         selettore.add(logger);
 
-        Controller mediatore = new Controller("localhost",8999);
+        Controller mediatore = new Controller("localhost",serverPort,clientPort);
 
         //Setto le varie componenti al mediatore in modo che possa conoscerli
         mediatore.setPannello(panel);
@@ -53,6 +54,10 @@ public class Interface {
         CollegueViewFactory.FACTORY.installView(ListaDomandeProtoAdapter.class, new ListaDomandeView());
 
         f.pack();
-
+    }
+    public static void main(String[] args){
+        int serverPort = 8999;
+        int clientPort = 1212;
+        Interface client = new Interface(serverPort,clientPort);
     }
 }

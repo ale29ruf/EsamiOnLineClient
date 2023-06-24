@@ -28,9 +28,9 @@ public class Controller extends AbstractMediator{
     private final String hostname = "localhost"; //hostname utilizzato per instaurare una connessione verso il server e ricevere le domande di un appello
 
 
-
-    public Controller(String hostname, int port){
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(hostname, port).usePlaintext().build();
+    public Controller(String hostname, int serverPort, int clientPort){
+        super(clientPort);
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(hostname, serverPort).usePlaintext().build();
         stub = SenderGrpc.newBlockingStub(channel);
     }
 
@@ -68,11 +68,6 @@ public class Controller extends AbstractMediator{
         if(jDialogCod.isConfirmed()){
             String codice = jDialogCod.getCodice();
             Model m = new InfoProtoAdapter(this);
-
-            //Quando avviamo piu' client sulla stessa macchina, abbiamo bisogno di specificare per ciascuno di questi una porta differente
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Inserisci la porta: ");
-            port = scanner.nextInt();
 
             RichiestaPartecipazioneAppello task = new RichiestaPartecipazioneAppello(m,stub,codice,hostname,port);
             esecutore.execute(task);
