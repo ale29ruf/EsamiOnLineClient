@@ -23,9 +23,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class AbstractMediator implements Mediatore{ //Si occupa della comunicazione locale
 
-    private Lock l = new ReentrantLock(); //Lock usato per sincronizzare l'accesso al logger
+    private Lock l = new ReentrantLock(); //Lock usato per sincronizzare l'accesso al logger. Concorrenza tra thread dell'esecutore e main thread
 
-    Executor esecutore = Executors.newSingleThreadExecutor(); //Per comodità si è fatto uso di un esecutore a cui sottomettere i vari task (pattern command nativo di java)
+    Executor esecutore = Executors.newFixedThreadPool(2); //Per comodità si è fatto uso di un esecutore a cui sottomettere i vari task (pattern command nativo di java)
 
     int port; //porta su cui il client si mette in attesa per ricevere le domande di un appello
 

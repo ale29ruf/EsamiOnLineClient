@@ -11,6 +11,9 @@ import java.awt.*;
 
 public class Interface {
 
+    private static int serverPort = 8999;
+    private static int clientPort = 1214;
+
     public Interface(int serverPort, int clientPort){
         JFrame f = new JFrame("Applicazione client-server");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,8 +59,6 @@ public class Interface {
         f.pack();
     }
     public static void main(String[] args){
-        int serverPort = 8999;
-        int clientPort = 1212;
         Interface client = new Interface(serverPort,clientPort);
     }
 }

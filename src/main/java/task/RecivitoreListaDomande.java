@@ -26,7 +26,7 @@ public class RecivitoreListaDomande extends Thread {
         try {
             server.start();
             System.out.println("Client started at " + server.getPort());
-            server.awaitTermination(5, TimeUnit.SECONDS); //il thread sta in ascolto per 5 secondi e poi termina
+            server.awaitTermination(20, TimeUnit.MINUTES); //il thread sta in ascolto per n minuti e poi termina
         } catch (IOException | InterruptedException e) {
             server.shutdown();
         }

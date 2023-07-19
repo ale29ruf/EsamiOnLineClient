@@ -9,6 +9,7 @@ import javax.swing.*;
  */
 public interface Strategy {
 
+    // source -> contenitore dei dati da visualizzare
     JComponent proietta(Model source, JComponent destination);
 
 }

@@ -31,6 +31,6 @@ public class AppelliProtoAdapter implements Model {
     @Override
     public void setRemoteInfo(MessageOrBuilder remoteInfo) {
         this.appelli = (Remotemethod.ListaAppelli) remoteInfo;
-        notifica();
+        notifica(); // nello schema di base dell'observer si trova nella super classe astratta
     }
 }
